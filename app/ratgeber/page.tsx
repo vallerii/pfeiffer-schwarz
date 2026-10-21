@@ -18,8 +18,8 @@ export default function Ratgeber() {
         <div className="wrap">
           <Breadcrumbs items={[{ name: "Startseite", href: "/" }, { name: "Ratgeber" }]} />
           <div className="mt-10 grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-end">
-            <h1 className="text-4xl leading-[1.05] font-extrabold sm:text-5xl lg:text-6xl">
-              Wissen aus der <span className="text-blue">Praxis</span>
+            <h1 className="text-[2.9rem] leading-[0.95] sm:text-6xl lg:text-[4.6rem]">
+              Wissen aus der Praxis
             </h1>
             <p className="lead">
               Tipps für Hoteliers, Bauherren und Eigentümer – aus über 20 Jahren auf der Baustelle. Ehrlich, verständlich und ohne

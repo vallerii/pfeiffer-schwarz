@@ -15,22 +15,22 @@ export function RatgeberList({ articles }: { articles: RatgeberArticle[] }) {
     <>
       <FilterTabs label="Artikel filtern" options={CATS} value={cat} onChange={setCat} />
       {first && (
-        <article className="group relative mt-12 grid gap-8 border-b border-line pb-14 lg:grid-cols-[7fr_5fr] lg:items-center lg:gap-14">
+        <article className="group relative mt-12 grid gap-8 border-b border-fuge pb-14 lg:grid-cols-[7fr_5fr] lg:items-center lg:gap-14">
           <Photo src={first.img} alt="" className="aspect-[16/10]" sizes="(min-width: 1024px) 58vw, 100vw" priority />
           <div>
-            <p className="flex gap-3 text-sm text-slate">
-              <span className="font-medium text-blue">{first.cat}</span>
+            <p className="flex gap-3 text-sm text-stein">
+              <span className="font-medium text-messing-dunkel">{first.cat}</span>
               <span>
                 {first.minutes} Min. Lesezeit · {formatMonth(first.updated)}
               </span>
             </p>
-            <h2 className="mt-3 text-3xl leading-tight font-bold sm:text-4xl">
-              <Link href={`/ratgeber/${first.slug}`} className="after:absolute after:inset-0 group-hover:text-blue">
+            <h2 className="mt-3 text-3xl leading-tight font-semibold sm:text-4xl">
+              <Link href={`/ratgeber/${first.slug}`} className="after:absolute after:inset-0 group-hover:text-messing-dunkel">
                 {first.title}
               </Link>
             </h2>
-            <p className="mt-4 text-lg text-ink-2">{first.description}</p>
-            <span className="link-arrow mt-6">Artikel lesen →</span>
+            <p className="mt-4 text-lg text-schiefer-2">{first.description}</p>
+            <span className="link-arrow mt-6">Artikel lesen</span>
           </div>
         </article>
       )}

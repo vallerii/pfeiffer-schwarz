@@ -11,7 +11,7 @@ type Props = {
 /** Bild, das seinen Container füllt. Hintergrund in Navy-Ton, solange das Foto lädt oder fehlt. */
 export function Photo({ src, alt, className = "", sizes = "(min-width: 1024px) 50vw, 100vw", priority }: Props) {
   return (
-    <div className={`relative overflow-hidden bg-navy-soft/15 ${className}`}>
+    <div className={`relative overflow-hidden bg-kalk-tief ${className}`}>
       <Image
         src={`/img/${src}`}
         alt={alt}

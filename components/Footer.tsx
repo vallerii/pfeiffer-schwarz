@@ -13,7 +13,7 @@ const company = [
 
 export function Footer() {
   return (
-    <footer className="bg-navy-deep pb-24 text-white/70 lg:pb-0">
+    <footer className="bg-tanne-tief pb-24 text-white/70 lg:pb-0">
       <div className="wrap grid gap-12 py-20 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div className="space-y-6">
           <Logo inverted />
@@ -59,7 +59,7 @@ export function Footer() {
 function FooterCol({ title, href, items }: { title: string; href?: string; items: { label: string; href: string }[] }) {
   return (
     <div>
-      <p className="mb-4 font-display font-bold text-white">{href ? <Link href={href}>{title}</Link> : title}</p>
+      <p className="mb-4 font-display font-semibold text-white">{href ? <Link href={href}>{title}</Link> : title}</p>
       <ul className="space-y-2.5 text-[15px]">
         {items.map((i) => (
           <li key={i.href + i.label}>

@@ -20,18 +20,18 @@ export function Articles({ items }: { items: Article[] }) {
         return (
           <article key={a.title} className="group relative flex flex-col">
             <Photo src={a.img} alt="" className="aspect-[3/2]" sizes="(min-width: 768px) 33vw, 100vw" />
-            <p className="mt-5 flex gap-3 text-sm text-slate">
-              {a.tag && <span className="font-medium text-blue">{a.tag}</span>}
+            <p className="mt-5 flex gap-3 text-sm text-stein">
+              {a.tag && <span className="font-medium text-messing-dunkel">{a.tag}</span>}
               <span>
                 {a.time} Lesezeit{match && <> · {formatMonth(match.updated)}</>}
               </span>
             </p>
-            <h3 className="mt-2 text-xl leading-snug font-bold">
-              <Link href={href} className="after:absolute after:inset-0 group-hover:text-blue">
+            <h3 className="mt-2 text-xl leading-snug font-semibold">
+              <Link href={href} className="after:absolute after:inset-0 group-hover:text-messing-dunkel">
                 {a.title}
               </Link>
             </h3>
-            <p className="mt-2 text-ink-2">{a.text}</p>
+            <p className="mt-2 text-schiefer-2">{a.text}</p>
           </article>
         );
       })}

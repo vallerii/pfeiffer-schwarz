@@ -52,7 +52,6 @@ export function HeroQuiz() {
   const q = !isStart && !isBad && !isContact && !done ? steps[step] : null;
   const total = path ? steps.length + 2 : 5;
   const current = isStart ? 1 : done || isContact ? total : step + 2;
-  const pct = done ? 100 : ((current - 1) / (total - 1)) * 100;
   const key = `${path}-${step}`;
   const picked = sel[key] ?? [];
 
@@ -93,43 +92,35 @@ export function HeroQuiz() {
   const label = done ? "Fertig" : isBad ? "Bad in 3 Tagen" : `Schritt ${current} von ${total}`;
 
   return (
-    <div className="text-white" aria-live="polite">
-      <div className="mb-4 flex min-h-8 items-center justify-between text-sm text-white/60">
+    <div aria-live="polite">
+      <div className="mb-4 flex min-h-8 items-center justify-between text-[15px] text-stein">
         <span className="num">{label}</span>
         {!isStart && !done && (
-          <button type="button" onClick={back} className="font-medium text-white hover:underline">
-            ← Zurück
+          <button type="button" onClick={back} className="font-medium text-tanne underline decoration-fuge underline-offset-4 hover:decoration-tanne">
+            Zurück
           </button>
         )}
       </div>
-      <Progress value={pct} />
+      <Progress current={done ? total : current} total={total} />
 
       <div className="mt-8">
         {isStart && (
           <>
-            <p className="font-display text-2xl font-bold sm:text-3xl">Was möchten Sie renovieren?</p>
-            <p className="mt-2 text-white/60">In vier Klicks zur passenden Ansprechperson.</p>
-            <ul className="mt-7 border-t border-white/15">
+            <p className="font-display text-[2rem] leading-none font-semibold text-tanne sm:text-[2.4rem]">Was möchten Sie renovieren?</p>
+            <p className="mt-3 text-stein">In vier Klicks zur passenden Ansprechperson.</p>
+            <ul className="fliesen mt-7 bg-fuge p-(--spacing-fuge) sm:grid-cols-2">
               {(Object.keys(PATHS) as PathId[]).map((id) => (
-                <li key={id} className="border-b border-white/15">
+                <li key={id}>
                   <button
                     type="button"
                     onClick={() => {
                       setPath(id);
                       setStep(0);
                     }}
-                    className="group flex min-h-18 w-full items-center gap-4 py-4 text-left"
+                    className="flex h-full w-full flex-col justify-between gap-1 bg-weiss p-5 sm:min-h-28 sm:gap-3 text-left transition-colors hover:bg-tanne hover:text-weiss focus-visible:bg-tanne focus-visible:text-weiss"
                   >
-                    <span className="flex-1">
-                      <span className="block text-lg font-semibold">{PATHS[id].title}</span>
-                      <span className="block text-sm text-white/55">{PATHS[id].sub}</span>
-                    </span>
-                    <span
-                      aria-hidden="true"
-                      className="flex h-10 w-10 items-center justify-center border border-white/25 transition group-hover:border-blue-bright group-hover:bg-blue-bright"
-                    >
-                      →
-                    </span>
+                    <span className="block text-[17px] leading-tight font-semibold">{PATHS[id].title}</span>
+                    <span className="block text-[14px] leading-snug opacity-70">{PATHS[id].sub}</span>
                   </button>
                 </li>
               ))}
@@ -139,8 +130,8 @@ export function HeroQuiz() {
 
         {q && (
           <>
-            <p className="font-display text-2xl font-bold sm:text-3xl">{q.q}</p>
-            {q.hint && <p className="mt-2 text-white/60">{q.hint}</p>}
+            <p className="font-display text-[2rem] leading-none font-semibold text-tanne sm:text-[2.4rem]">{q.q}</p>
+            {q.hint && <p className="mt-3 text-stein">{q.hint}</p>}
             <div className="mt-7 flex flex-wrap gap-2.5">
               {q.opts.map((o) => (
                 <OptionButton key={o} selected={picked.includes(o)} onClick={() => pick(o)}>
@@ -163,14 +154,14 @@ export function HeroQuiz() {
 
         {isBad && (
           <>
-            <p className="font-display text-2xl font-bold sm:text-3xl">Neues Bad in 3 Tagen</p>
-            <p className="mt-3 leading-relaxed text-white/70">
+            <p className="font-display text-[2rem] leading-none font-semibold text-tanne sm:text-[2.4rem]">Neues Bad in 3 Tagen</p>
+            <p className="mt-4 leading-relaxed text-schiefer-2">
               Fugenlose Bäder zum Festpreis – über unser System Mein Zauberbad. Planung in 3D, Umbau in der Regel in drei Tagen.
             </p>
             <a href={site.zauberbadUrl} target="_blank" rel="noopener" className="btn-primary mt-8 w-full">
               Weiter zu meinzauberbad.de ↗
             </a>
-            <button type="button" onClick={() => setContact(true)} className="mt-4 w-full py-2 text-sm font-medium text-white/80 hover:text-white">
+            <button type="button" onClick={() => setContact(true)} className="mt-4 w-full py-2 text-[15px] font-medium text-tanne hover:underline">
               Lieber direkt Rückruf anfordern
             </button>
           </>
@@ -178,19 +169,19 @@ export function HeroQuiz() {
 
         {isContact && (
           <form onSubmit={submit}>
-            <p className="font-display text-2xl font-bold sm:text-3xl">Fast geschafft.</p>
-            <p className="mt-2 text-white/60">
+            <p className="font-display text-[2rem] leading-none font-semibold text-tanne sm:text-[2.4rem]">Fast geschafft.</p>
+            <p className="mt-3 text-stein">
               Wir melden uns innerhalb von <span className="todo">[24 h]</span>.
             </p>
             <div className="mt-7 grid gap-4">
-              <DarkField label="PLZ / Ort des Objekts" name="ort" autoComplete="postal-code" />
-              <DarkField label="Name" name="name" autoComplete="name" required />
-              <DarkField label="Telefon" name="telefon" type="tel" autoComplete="tel" required />
+              <Field label="PLZ / Ort des Objekts" name="ort" autoComplete="postal-code" />
+              <Field label="Name" name="name" autoComplete="name" required />
+              <Field label="Telefon" name="telefon" type="tel" autoComplete="tel" required />
             </div>
             <button type="submit" className="btn-primary mt-7 w-full">
               Anfrage senden
             </button>
-            <p className="mt-3 text-xs text-white/50">
+            <p className="mt-3 text-[13px] text-stein">
               Mit dem Absenden stimmen Sie der{" "}
               <a href="/datenschutz" className="underline">
                 Datenschutzerklärung
@@ -201,15 +192,15 @@ export function HeroQuiz() {
         )}
 
         {done && (
-          <div className="py-6">
-            <span className="flex h-14 w-14 items-center justify-center bg-blue-bright text-2xl" aria-hidden="true">
+          <div className="py-4">
+            <span className="flex h-14 w-14 items-center justify-center bg-tanne text-2xl text-messing" aria-hidden="true">
               ✓
             </span>
-            <p className="mt-6 font-display text-2xl font-bold sm:text-3xl">Danke! Ihre Anfrage ist da.</p>
-            <p className="mt-2 text-white/70">
+            <p className="mt-6 font-display text-[2rem] leading-none font-semibold text-tanne">Danke! Ihre Anfrage ist da.</p>
+            <p className="mt-3 text-schiefer-2">
               <span className="todo">[Name Projektleiter]</span> ruft Sie zurück.
             </p>
-            <button type="button" onClick={reset} className="btn-light mt-8">
+            <button type="button" onClick={reset} className="btn-ghost mt-8">
               Neue Anfrage
             </button>
           </div>
@@ -219,13 +210,13 @@ export function HeroQuiz() {
   );
 }
 
-function DarkField({ label, ...props }: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) {
+function Field({ label, ...props }: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
-    <label className="grid gap-1.5 text-sm font-medium text-white/75">
+    <label className="grid gap-1.5 text-[15px] font-medium text-schiefer-2">
       {label}
       <input
         {...props}
-        className="h-12 border border-white/20 bg-white/5 px-4 text-base text-white placeholder:text-white/40 focus:border-blue-bright focus:outline-none"
+        className="h-12 rounded-(--radius-kante) border border-fuge bg-weiss px-4 text-base text-schiefer focus:border-tanne focus:outline-none"
       />
     </label>
   );

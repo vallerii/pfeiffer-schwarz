@@ -20,8 +20,8 @@ export function FilterTabs<T extends string>({
           role="tab"
           aria-selected={value === o}
           onClick={() => onChange(o)}
-          className={`min-h-10 px-5 text-sm font-medium transition-colors ${
-            value === o ? "bg-navy text-white" : "text-ink-2 ring-1 ring-line hover:ring-navy"
+          className={`min-h-11 rounded-(--radius-kante) px-5 text-[15px] font-medium transition-colors ${
+            value === o ? "bg-tanne text-weiss" : "bg-weiss text-schiefer-2 ring-1 ring-fuge hover:ring-tanne"
           }`}
         >
           {o}

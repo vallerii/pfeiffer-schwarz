@@ -14,16 +14,16 @@ export function BeforeAfter({ before, after, alt }: { before?: string; after: st
         {before ? (
           <Photo src={before} alt={`Vorher: ${alt}`} className="h-full w-full" />
         ) : (
-          <Placeholder label="Vorher-Foto aus demselben Blickwinkel" className="h-full w-full bg-paper" />
+          <Placeholder label="Vorher-Foto aus demselben Blickwinkel" className="h-full w-full bg-kalk" />
         )}
       </div>
       <div className="pointer-events-none absolute inset-y-0 w-0.5 bg-white" style={{ left: `${pos}%` }}>
-        <span className="absolute top-1/2 left-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-white text-navy shadow-lg">
+        <span className="absolute top-1/2 left-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-weiss text-tanne">
           ⇔
         </span>
       </div>
-      <span className="absolute top-4 left-4 bg-white px-3 py-1 text-xs font-semibold text-navy">Vorher</span>
-      <span className="absolute top-4 right-4 bg-blue px-3 py-1 text-xs font-semibold text-white">Nachher</span>
+      <span className="absolute top-4 left-4 bg-weiss px-3 py-1 text-[13px] font-semibold text-tanne">Vorher</span>
+      <span className="absolute top-4 right-4 bg-messing px-3 py-1 text-[13px] font-semibold text-tanne-tief">Nachher</span>
       <input
         type="range"
         min={0}

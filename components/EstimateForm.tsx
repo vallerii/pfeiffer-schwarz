@@ -50,18 +50,17 @@ export function EstimateForm({
   const q = !done && !isContact ? steps[step] : null;
   const picked = sel[step] ?? [];
   const current = done ? total : step + 1;
-  const pct = done ? 100 : ((current - 1) / total) * 100;
   const summary = steps
     .map((_, i) => sel[i]?.join(", "))
     .filter(Boolean)
     .join(" · ");
 
   const c = {
-    title: dark ? "text-white" : "text-navy",
-    muted: dark ? "text-white/60" : "text-slate",
-    body: dark ? "text-white/75" : "text-ink-2",
-    line: dark ? "border-white/15" : "border-line",
-    link: dark ? "text-white" : "text-navy",
+    title: dark ? "text-white" : "text-tanne",
+    muted: dark ? "text-white/60" : "text-stein",
+    body: dark ? "text-white/75" : "text-schiefer-2",
+    line: dark ? "border-white/15" : "border-fuge",
+    link: dark ? "text-white" : "text-tanne",
   };
 
   function pick(label: string) {
@@ -91,23 +90,23 @@ export function EstimateForm({
 
   return (
     <div aria-live="polite">
-      <p className={`font-display text-xl font-bold ${c.title}`}>{title}</p>
+      <p className={`font-display text-[1.6rem] leading-none font-semibold ${c.title}`}>{title}</p>
       <div className={`mt-1 flex min-h-7 items-center justify-between gap-4 text-sm ${c.muted}`}>
         <span className="num">{done ? "Fertig" : `Schritt ${current} von ${total}`}</span>
         {step > 0 && !done && (
-          <button type="button" onClick={() => setStep(step - 1)} className={`font-medium hover:underline ${c.link}`}>
-            ← Zurück
+          <button type="button" onClick={() => setStep(step - 1)} className={`font-medium underline underline-offset-4 ${c.link}`}>
+            Zurück
           </button>
         )}
       </div>
       <div className="mt-3">
-        <Progress value={pct} tone={tone} />
+        <Progress current={done ? total : current} total={total} tone={tone} />
       </div>
 
       <div className="mt-8 min-h-72">
         {q && (
           <>
-            <p className={`font-display text-2xl font-bold ${c.title}`}>{q.q}</p>
+            <p className={`font-display text-[1.9rem] leading-[1.05] font-semibold ${c.title}`}>{q.q}</p>
             {q.hint && <p className={`mt-1.5 ${c.muted}`}>{q.hint}</p>}
             <div className="mt-6 flex flex-wrap gap-2.5">
               {q.opts.map((o) => (
@@ -131,16 +130,16 @@ export function EstimateForm({
 
         {isContact && (
           <form onSubmit={submit} className="grid gap-4">
-            <p className={`font-display text-2xl font-bold ${c.title}`}>{contactTitle}</p>
+            <p className={`font-display text-[1.9rem] leading-[1.05] font-semibold ${c.title}`}>{contactTitle}</p>
             {contactHint && <p className={`-mt-2 ${c.muted}`}>{contactHint}</p>}
             {uploads && (
               <label
-                className={`flex cursor-pointer items-center gap-4 border border-dashed px-5 py-4 ${
-                  dark ? "border-white/30 hover:border-blue-bright" : "border-navy/30 hover:border-blue"
+                className={`flex cursor-pointer items-center gap-4 rounded-(--radius-kante) border border-dashed px-5 py-4 ${
+                  dark ? "border-white/30 hover:border-messing" : "border-tanne/30 bg-weiss hover:border-tanne"
                 }`}
               >
                 <span
-                  className={`flex h-10 w-10 items-center justify-center ${dark ? "bg-white/10 text-white" : "bg-blue-tint text-blue"}`}
+                  className={`flex h-10 w-10 items-center justify-center ${dark ? "bg-white/10 text-white" : "bg-tanne text-messing"}`}
                   aria-hidden="true"
                 >
                   ↑
@@ -166,10 +165,10 @@ export function EstimateForm({
                 {label}
                 <input
                   {...f}
-                  className={`h-12 border px-4 text-base focus:outline-none ${
+                  className={`h-12 rounded-(--radius-kante) border px-4 text-base focus:outline-none ${
                     dark
-                      ? "border-white/20 bg-white/5 text-white focus:border-blue-bright"
-                      : "border-line bg-white text-ink focus:border-blue"
+                      ? "border-white/20 bg-white/5 text-white focus:border-messing"
+                      : "border-fuge bg-weiss text-schiefer focus:border-tanne"
                   }`}
                 />
               </label>
@@ -188,10 +187,10 @@ export function EstimateForm({
 
         {done && (
           <div>
-            <span className="flex h-14 w-14 items-center justify-center bg-blue-bright text-2xl text-white" aria-hidden="true">
+            <span className="flex h-14 w-14 items-center justify-center bg-tanne text-2xl text-messing" aria-hidden="true">
               ✓
             </span>
-            <p className={`mt-6 font-display text-2xl font-bold ${c.title}`}>Danke, wir melden uns!</p>
+            <p className={`mt-6 font-display text-[1.9rem] leading-none font-semibold ${c.title}`}>Danke, wir melden uns!</p>
             <p className={`mt-2 ${c.body}`}>Ihre Angaben: {summary}</p>
             <p className={`mt-1 ${c.body}`}>Nächster Schritt: Rückruf und Termin vor Ort.</p>
             <button type="button" className={`mt-8 ${dark ? "btn-light" : "btn-ghost"}`} onClick={reset}>
@@ -203,7 +202,7 @@ export function EstimateForm({
 
       <p className={`mt-6 border-t pt-5 text-sm ${c.line} ${c.body}`}>
         Lieber anrufen?{" "}
-        <a href={site.phoneHref} className={`num font-semibold ${dark ? "text-white" : "text-blue"}`}>
+        <a href={site.phoneHref} className={`num font-semibold ${dark ? "text-white" : "text-tanne underline decoration-messing underline-offset-4"}`}>
           {site.phone}
         </a>
       </p>

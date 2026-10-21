@@ -12,7 +12,7 @@ function inline(text: string): ReactNode[] {
     if (m.index > last) out.push(text.slice(last, m.index));
     if (m[1]) {
       const href = m[2];
-      const cls = "font-semibold text-blue underline decoration-blue/30 underline-offset-4 hover:decoration-blue";
+      const cls = "font-semibold text-messing-dunkel underline decoration-messing-dunkel/30 underline-offset-4 hover:decoration-messing-dunkel";
       out.push(
         href.startsWith("/") ? (
           <Link key={k++} href={href} className={cls}>
@@ -26,7 +26,7 @@ function inline(text: string): ReactNode[] {
       );
     } else if (m[3]) {
       out.push(
-        <strong key={k++} className="font-semibold text-navy">
+        <strong key={k++} className="font-semibold text-tanne">
           {m[3]}
         </strong>,
       );
@@ -64,21 +64,21 @@ export function headings(md: string) {
 export function Prose({ md }: { md: string }) {
   const blocks = md.trim().split(/\n\s*\n/);
   return (
-    <div className="text-[18px] leading-[1.75] text-ink-2">
+    <div className="text-[18px] leading-[1.75] text-schiefer-2">
       {blocks.map((b, i) => {
         const lines = b.split("\n");
         if (b.startsWith("## ")) {
           const t = b.slice(3);
           return (
-            <h2 key={i} id={slug(t)} className="mt-14 mb-5 scroll-mt-28 text-2xl leading-tight font-bold sm:text-3xl">
+            <h2 key={i} id={slug(t)} className="mt-14 mb-5 scroll-mt-28 text-2xl leading-tight font-semibold sm:text-3xl">
               {t}
             </h2>
           );
         }
-        if (b.startsWith("### ")) return <h3 key={i} className="mt-10 mb-3 text-xl font-bold">{b.slice(4)}</h3>;
+        if (b.startsWith("### ")) return <h3 key={i} className="mt-10 mb-3 text-xl font-semibold">{b.slice(4)}</h3>;
         if (b.startsWith("> "))
           return (
-            <aside key={i} className="my-8 border-l-4 border-blue bg-blue-tint px-6 py-5 text-[17px] text-navy">
+            <aside key={i} className="my-8 border-l-4 border-messing-dunkel bg-kalk-tief px-6 py-5 text-[17px] text-tanne">
               {inline(lines.map((l) => l.replace(/^> ?/, "")).join(" "))}
             </aside>
           );
@@ -87,7 +87,7 @@ export function Prose({ md }: { md: string }) {
             <ul key={i} className="my-6 space-y-3">
               {lines.map((l, j) => (
                 <li key={j} className="flex gap-4">
-                  <span className="mt-[0.7em] h-1.5 w-1.5 shrink-0 bg-blue" aria-hidden="true" />
+                  <span className="mt-[0.7em] h-1.5 w-1.5 shrink-0 bg-messing-dunkel" aria-hidden="true" />
                   <span>{inline(l.slice(2))}</span>
                 </li>
               ))}
@@ -98,7 +98,7 @@ export function Prose({ md }: { md: string }) {
             <ol key={i} className="my-6 space-y-3">
               {lines.map((l, j) => (
                 <li key={j} className="flex gap-4">
-                  <span className="num w-6 shrink-0 font-display font-bold text-blue">{String(j + 1).padStart(2, "0")}</span>
+                  <span className="num w-6 shrink-0 font-display font-semibold text-messing-dunkel">{String(j + 1).padStart(2, "0")}</span>
                   <span>{inline(l.replace(/^\d+\. /, ""))}</span>
                 </li>
               ))}

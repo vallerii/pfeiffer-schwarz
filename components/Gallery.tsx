@@ -13,18 +13,18 @@ export function Gallery({ items, cats }: { items: GalleryItem[]; cats?: readonly
   return (
     <>
       {cats && <FilterTabs label="Galerie filtern" options={cats} value={cat} onChange={setCat} />}
-      <div className={`${cats ? "mt-12" : "mt-2"} columns-1 gap-6 sm:columns-2 lg:columns-3`}>
+      <div className={`${cats ? "mt-10" : "mt-2"} fliesen grid-flow-dense bg-fuge p-(--spacing-fuge) grid-cols-2 lg:grid-cols-3`}>
         {list.map((g) => (
-          <figure key={g.img} className="mb-6 break-inside-avoid">
-            <Photo src={g.img} alt={g.alt} className={`${g.tall ? "aspect-[3/4]" : "aspect-[4/3]"}`} sizes="(min-width: 1024px) 33vw, 50vw" />
-            <figcaption className="mt-3 flex justify-between text-sm">
-              <span className="text-ink-2">{g.place}</span>
-              {cats && <span className="font-medium text-blue">{g.cat}</span>}
+          <figure key={g.img} className={`relative bg-weiss ${g.tall ? "row-span-2" : ""}`}>
+            <Photo src={g.img} alt={g.alt} className={g.tall ? "h-full min-h-64" : "aspect-[4/3]"} sizes="(min-width: 1024px) 33vw, 50vw" />
+            <figcaption className="absolute bottom-0 left-0 max-w-[85%] bg-weiss px-3 py-1.5 text-[14px] text-schiefer-2">
+              {g.place}
+              {cats && <span className="font-semibold text-messing-dunkel">, {g.cat}</span>}
             </figcaption>
           </figure>
         ))}
       </div>
-      {list.length === 0 && <p className="mt-12 text-slate">Für diese Kategorie folgen bald Projektfotos.</p>}
+      {list.length === 0 && <p className="mt-12 text-stein">Für diese Kategorie folgen bald Projektfotos.</p>}
     </>
   );
 }

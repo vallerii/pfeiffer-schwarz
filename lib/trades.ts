@@ -14,7 +14,7 @@ export type TradeContent = {
   noun: string; // „Ihr … in der Region“
   metaTitle: string;
   metaDescription: string;
-  h1: [string, string]; // zweiter Teil in Blau
+  h1: [string, string]; // wird als ein Satz ausgegeben
   lead: string;
   benefits: string[];
   hero: [string, string, string];

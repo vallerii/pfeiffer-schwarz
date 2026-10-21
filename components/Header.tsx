@@ -27,7 +27,7 @@ function DesktopDropdown({ group }: { group: NavGroup }) {
     >
       <button
         type="button"
-        className="flex min-h-12 items-center gap-1.5 text-[15px] font-medium text-navy hover:text-blue"
+        className="flex min-h-12 items-center gap-1.5 text-[15px] font-medium text-tanne hover:text-messing-dunkel"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
       >
@@ -39,31 +39,31 @@ function DesktopDropdown({ group }: { group: NavGroup }) {
           open ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0"
         }`}
       >
-        <div className="flex gap-10 bg-white p-7 shadow-[0_24px_60px_-20px_rgba(16,28,40,0.35)] ring-1 ring-navy/5">
+        <div className="flex gap-10 bg-white p-7 shadow-[0_24px_60px_-20px_rgba(16,28,40,0.35)] ring-1 ring-tanne/5">
           <ul className="w-64">
             <li>
-              <Link href={group.href} className="mb-2 block border-b border-line pb-3 font-display font-bold text-navy hover:text-blue">
-                {group.label} im Überblick →
+              <Link href={group.href} className="mb-2 block border-b border-fuge pb-3 font-display font-semibold text-tanne hover:text-messing-dunkel">
+                {group.label} im Überblick
               </Link>
             </li>
             {group.items.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="block py-2 text-[15px] text-ink hover:text-blue">
+                <Link href={item.href} className="block py-2 text-[15px] text-schiefer hover:text-messing-dunkel">
                   {item.label}
-                  {item.note && <span className="block text-[13px] text-slate">{item.note}</span>}
+                  {item.note && <span className="block text-[13px] text-stein">{item.note}</span>}
                 </Link>
               </li>
             ))}
           </ul>
           {group.extra && (
-            <div className="w-56 space-y-6 border-l border-line pl-10">
+            <div className="w-56 space-y-6 border-l border-fuge pl-10">
               {group.extra.map((block) => (
                 <div key={block.title}>
-                  <p className="mb-2 text-[13px] font-semibold text-slate">{block.title}</p>
+                  <p className="mb-2 text-[13px] font-semibold text-stein">{block.title}</p>
                   <ul>
                     {block.items.map((item) => (
                       <li key={item.href}>
-                        <Link href={item.href} className="block py-1.5 text-[15px] hover:text-blue">
+                        <Link href={item.href} className="block py-1.5 text-[15px] hover:text-messing-dunkel">
                           {item.label}
                         </Link>
                       </li>
@@ -100,7 +100,7 @@ export function Header() {
 
   return (
     <>
-      <div className="bg-navy-deep text-[13px] text-white/70">
+      <div className="bg-tanne-tief text-[13px] text-white/70">
         <div className="wrap flex min-h-9 items-center justify-between gap-6">
           <span className="hidden sm:inline">
             {site.street}, {site.zip} {site.city} · bundesweit im Einsatz
@@ -112,7 +112,7 @@ export function Header() {
               </Link>
             ))}
             <a href={site.phoneHref} className="flex items-center gap-2 font-semibold text-white">
-              <span className="h-2 w-2 bg-blue-bright ring-4 ring-blue-bright/25" aria-hidden="true" />
+              <span className="h-2 w-2 bg-messing ring-4 ring-messing/25" aria-hidden="true" />
               Wasser- oder Brandschaden?
             </a>
           </nav>
@@ -121,7 +121,7 @@ export function Header() {
 
       <header
         className={`sticky top-0 z-30 bg-white/90 backdrop-blur-md transition-shadow ${
-          scrolled ? "shadow-[0_1px_0_0_var(--color-line)]" : ""
+          scrolled ? "shadow-[0_1px_0_0_var(--color-fuge)]" : ""
         }`}
       >
         <div className="wrap flex min-h-20 items-center gap-8">
@@ -134,7 +134,7 @@ export function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`text-[15px] font-medium hover:text-blue ${pathname === item.href ? "text-blue" : "text-navy"}`}
+                  className={`text-[15px] font-medium hover:text-messing-dunkel ${pathname === item.href ? "text-messing-dunkel" : "text-tanne"}`}
                 >
                   {item.label}
                 </Link>
@@ -142,7 +142,7 @@ export function Header() {
             )}
           </nav>
           <div className="ml-auto hidden items-center gap-5 xl:ml-0 xl:flex">
-            <a href={site.phoneHref} className="num hidden text-sm font-semibold whitespace-nowrap text-navy hover:text-blue 2xl:block">
+            <a href={site.phoneHref} className="num hidden text-sm font-semibold whitespace-nowrap text-tanne hover:text-messing-dunkel 2xl:block">
               {site.phone}
             </a>
             <Link href={formHref} className="btn-primary whitespace-nowrap">
@@ -151,7 +151,7 @@ export function Header() {
           </div>
           <button
             type="button"
-            className="ml-auto flex h-12 w-12 items-center justify-center text-navy xl:hidden"
+            className="ml-auto flex h-12 w-12 items-center justify-center text-tanne xl:hidden"
             aria-label={menuOpen ? "Menü schließen" : "Menü öffnen"}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((v) => !v)}
@@ -172,10 +172,10 @@ export function Header() {
           <nav aria-label="Mobile Navigation" className="wrap pt-2 pb-32">
             {mainNav.map((item) =>
               isGroup(item) ? (
-                <div key={item.href} className="border-b border-line">
+                <div key={item.href} className="border-b border-fuge">
                   <button
                     type="button"
-                    className="flex min-h-16 w-full items-center justify-between font-display text-xl font-bold text-navy"
+                    className="flex min-h-16 w-full items-center justify-between font-display text-xl font-semibold text-tanne"
                     aria-expanded={openGroup === item.href}
                     onClick={() => setOpenGroup(openGroup === item.href ? null : item.href)}
                   >
@@ -185,13 +185,13 @@ export function Header() {
                   {openGroup === item.href && (
                     <ul className="pb-5">
                       <li>
-                        <Link href={item.href} className="block py-2.5 font-semibold text-blue">
+                        <Link href={item.href} className="block py-2.5 font-semibold text-messing-dunkel">
                           Überblick
                         </Link>
                       </li>
                       {[...item.items, ...(item.extra?.flatMap((b) => b.items) ?? [])].map((sub) => (
                         <li key={sub.href}>
-                          <Link href={sub.href} className="block py-2.5 text-ink">
+                          <Link href={sub.href} className="block py-2.5 text-schiefer">
                             {sub.label}
                           </Link>
                         </li>
@@ -203,13 +203,13 @@ export function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="flex min-h-16 items-center border-b border-line font-display text-xl font-bold text-navy"
+                  className="flex min-h-16 items-center border-b border-fuge font-display text-xl font-semibold text-tanne"
                 >
                   {item.label}
                 </Link>
               ),
             )}
-            <div className="mt-6 flex flex-col gap-1 text-ink-2">
+            <div className="mt-6 flex flex-col gap-1 text-schiefer-2">
               {utilityNav.map((item) => (
                 <Link key={item.href} href={item.href} className="py-2">
                   {item.label}
@@ -221,7 +221,7 @@ export function Header() {
       </header>
 
       {/* Fixierte Leiste auf dem Smartphone */}
-      <div className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-2 gap-2 border-t border-line bg-white/95 p-2 backdrop-blur lg:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-2 gap-2 border-t border-fuge bg-white/95 p-2 backdrop-blur lg:hidden">
         <a href={site.phoneHref} className="btn-ghost">
           Anrufen
         </a>

@@ -10,9 +10,9 @@ export function LogoMark({ className = "" }: { className?: string }) {
         x="24"
         y="37"
         textAnchor="middle"
-        fontFamily="Montserrat Variable, Montserrat, sans-serif"
+        fontFamily="Barlow Condensed, sans-serif"
         fontWeight="700"
-        fontSize="13"
+        fontSize="15"
         letterSpacing="-0.5"
         fill="currentColor"
       >
@@ -25,12 +25,12 @@ export function LogoMark({ className = "" }: { className?: string }) {
 export function Logo({ inverted = false }: { inverted?: boolean }) {
   return (
     <Link href="/" className="group flex items-center gap-3" aria-label="Pfeiffer & Schwarz – zur Startseite">
-      <LogoMark className={`h-10 w-10 ${inverted ? "text-white" : "text-navy"}`} />
+      <LogoMark className={`h-10 w-10 ${inverted ? "text-weiss" : "text-tanne"}`} />
       <span className="flex flex-col leading-tight whitespace-nowrap">
-        <span className={`font-display text-[17px] font-bold tracking-tight ${inverted ? "text-white" : "text-navy"}`}>
+        <span className={`font-display text-[21px] leading-none font-semibold ${inverted ? "text-weiss" : "text-tanne"}`}>
           Pfeiffer &amp; Schwarz
         </span>
-        <span className={`text-xs ${inverted ? "text-white/60" : "text-slate"}`}>PS Hotel- und Wohnbau GmbH</span>
+        <span className={`${inverted ? "text-weiss/60" : "text-stein"} mt-1 text-[12.5px]`}>PS Hotel- und Wohnbau GmbH</span>
       </span>
     </Link>
   );

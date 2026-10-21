@@ -1,23 +1,31 @@
 @import "tailwindcss";
 
-/* Markenfarben aus pfeiffer-schwarz.com: Navy #1A2B3C, Blau #1032CF / #2A4EEF, Schiefer #65778A */
+/*
+ * Designrichtung „Fliesenspiegel“
+ * Farben aus den Materialien des Handwerks und der Region Wittgenstein:
+ * Tanne (Wald), Kalk (Putz), Fuge (Fugenmörtel), Messing (Armaturen), Schiefer (Dächer der Region).
+ */
 @theme {
-  --color-navy: #1a2b3c;
-  --color-navy-deep: #101c28;
-  --color-navy-soft: #24384d;
-  --color-blue: #1032cf;
-  --color-blue-bright: #2a4eef;
-  --color-blue-tint: #e9edfb;
-  --color-slate: #65778a;
-  --color-ink: #141414;
-  --color-ink-2: #3d4650;
-  --color-paper: #f4f4f2;
-  --color-line: #d9dcdf;
+  --color-tanne: #1d3b33;
+  --color-tanne-tief: #12261f;
+  --color-tanne-hell: #2b4d43;
+  --color-messing: #c99a3a;
+  --color-messing-hell: #dcb465;
+  --color-messing-dunkel: #87661f;
+  --color-schiefer: #222826;
+  --color-schiefer-2: #48514d;
+  --color-stein: #6e7671;
+  --color-kalk: #eeefea;
+  --color-kalk-tief: #e2e5de;
+  --color-fuge: #cfd3cb;
+  --color-weiss: #fbfbf8;
 
-  --font-display: "Montserrat Variable", "Montserrat", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Barlow Condensed", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Barlow", ui-sans-serif, system-ui, sans-serif;
 
-  --container-site: 1280px;
+  --container-site: 1320px;
+  --spacing-fuge: 6px;
+  --radius-kante: 3px;
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -28,25 +36,32 @@
     -webkit-text-size-adjust: 100%;
   }
   body {
-    @apply bg-white font-sans text-ink antialiased;
-    font-feature-settings: "ss01", "cv11";
+    @apply bg-weiss font-sans text-[17px] leading-[1.6] text-schiefer antialiased;
   }
   h1,
   h2,
   h3 {
-    @apply font-display text-navy;
+    @apply text-tanne;
     hyphens: auto;
     text-wrap: balance;
-    letter-spacing: -0.02em;
+  }
+  h1,
+  h2 {
+    @apply font-display font-semibold;
+    letter-spacing: -0.005em;
+  }
+  h3 {
+    @apply font-sans font-semibold;
+    letter-spacing: -0.005em;
   }
   p {
     text-wrap: pretty;
   }
   ::selection {
-    @apply bg-blue text-white;
+    @apply bg-messing text-tanne-tief;
   }
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-blue;
+    @apply outline-2 outline-offset-2 outline-messing;
   }
 }
 
@@ -57,28 +72,34 @@
   @apply py-20 sm:py-24 lg:py-32;
 }
 @utility h2 {
-  @apply text-3xl leading-[1.1] font-bold sm:text-4xl lg:text-5xl;
+  @apply font-display text-[2.4rem] leading-[1] font-semibold sm:text-5xl lg:text-[3.6rem];
 }
 @utility lead {
-  @apply max-w-2xl text-lg leading-relaxed text-ink-2 sm:text-xl;
+  @apply max-w-2xl text-lg leading-relaxed text-schiefer-2 sm:text-[1.25rem];
 }
+
+/* Kachel-Raster: der Hintergrund scheint als Fuge zwischen den Kacheln durch */
+@utility fliesen {
+  @apply grid gap-(--spacing-fuge);
+}
+
 @utility btn {
-  @apply inline-flex min-h-12 items-center justify-center gap-2 px-6 text-[15px] font-semibold transition-colors duration-200;
+  @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-(--radius-kante) px-6 text-[16px] font-semibold transition-colors duration-200;
 }
 @utility btn-primary {
-  @apply btn bg-blue text-white hover:bg-blue-bright;
+  @apply btn bg-messing text-tanne-tief hover:bg-messing-hell;
 }
 @utility btn-ghost {
-  @apply btn border border-navy/25 text-navy hover:border-navy hover:bg-navy hover:text-white;
+  @apply btn border border-tanne/30 text-tanne hover:border-tanne hover:bg-tanne hover:text-weiss;
 }
 @utility btn-light {
-  @apply btn border border-white/40 text-white hover:bg-white hover:text-navy;
+  @apply btn border border-weiss/40 text-weiss hover:border-weiss hover:bg-weiss hover:text-tanne;
 }
 @utility link-arrow {
-  @apply inline-flex items-center gap-2 font-semibold text-blue underline-offset-4 hover:underline;
+  @apply inline-flex items-center gap-2 font-semibold text-tanne underline decoration-messing decoration-2 underline-offset-[6px] hover:text-messing-dunkel;
 }
 @utility num {
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: tabular-nums lining-nums;
 }
 
 /* Platzhalter für Inhalte, die der Kunde noch liefert */

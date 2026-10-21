@@ -24,28 +24,28 @@ export function ServiceAreaMap() {
     <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Einzugsgebiet rund um Bad Laasphe" className="block h-auto w-full max-w-full">
       {[10, 20, 30].map((km) => (
         <g key={km}>
-          <circle cx={CX} cy={CY} r={km * PX} fill="none" stroke="var(--color-navy)" strokeOpacity={0.14} strokeDasharray={km === 30 ? "4 6" : undefined} />
-          <text x={CX + km * PX * 0.7 + 4} y={CY - km * PX * 0.7 - 4} fontSize="11" fill="var(--color-slate)">
+          <circle cx={CX} cy={CY} r={km * PX} fill="none" stroke="var(--color-tanne)" strokeOpacity={0.14} strokeDasharray={km === 30 ? "4 6" : undefined} />
+          <text x={CX + km * PX * 0.7 + 4} y={CY - km * PX * 0.7 - 4} fontSize="11" fill="var(--color-stein)">
             {km} km
           </text>
         </g>
       ))}
-      <circle cx={CX} cy={CY} r={20 * PX} fill="var(--color-blue)" fillOpacity={0.05} />
+      <circle cx={CX} cy={CY} r={20 * PX} fill="var(--color-messing-dunkel)" fillOpacity={0.05} />
       {TOWNS.map((t) => {
         const [x, y] = xy(t.lat, t.lon);
         const left = t.side ? t.side === "left" : x < CX - 20;
         return (
           <g key={t.name}>
-            <circle cx={x} cy={y} r={4.5} fill="var(--color-navy)" />
-            <text x={left ? x - 9 : x + 9} y={y + 4} fontSize="13" fontWeight={500} fill="var(--color-ink)" textAnchor={left ? "end" : "start"}>
+            <circle cx={x} cy={y} r={4.5} fill="var(--color-tanne)" />
+            <text x={left ? x - 9 : x + 9} y={y + 4} fontSize="13" fontWeight={500} fill="var(--color-schiefer)" textAnchor={left ? "end" : "start"}>
               {t.name}
             </text>
           </g>
         );
       })}
-      <circle cx={CX} cy={CY} r={14} fill="var(--color-blue)" fillOpacity={0.2} />
-      <circle cx={CX} cy={CY} r={7} fill="var(--color-blue)" />
-      <text x={CX + 14} y={CY - 12} fontSize="14" fontWeight={700} fill="var(--color-blue)">
+      <circle cx={CX} cy={CY} r={14} fill="var(--color-messing-dunkel)" fillOpacity={0.2} />
+      <circle cx={CX} cy={CY} r={7} fill="var(--color-messing-dunkel)" />
+      <text x={CX + 14} y={CY - 12} fontSize="14" fontWeight={700} fill="var(--color-messing-dunkel)">
         Bad Laasphe
       </text>
     </svg>

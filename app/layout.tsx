@@ -1,6 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import "@fontsource-variable/montserrat";
-import "@fontsource-variable/inter";
+import "@fontsource/barlow/400.css";
+import "@fontsource/barlow/500.css";
+import "@fontsource/barlow/600.css";
+import "@fontsource/barlow/400-italic.css";
+import "@fontsource/barlow-condensed/500.css";
+import "@fontsource/barlow-condensed/600.css";
+import "@fontsource/barlow-condensed/700.css";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -18,7 +23,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#1a2b3c",
+  themeColor: "#1d3b33",
 };
 
 const businessSchema = {

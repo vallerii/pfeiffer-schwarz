@@ -11,6 +11,7 @@ import { BeforeAfter } from "@/components/BeforeAfter";
 import {
   Breadcrumbs,
   FinalCta,
+  Masskette,
   ProcessSteps,
   RelatedLinks,
   Testimonials,
@@ -93,66 +94,61 @@ const schema = [
 export default function Hotelrenovierung() {
   return (
     <>
-      {/* Hero mit Hotel-Quiz */}
-      <section id="anfrage" className="bg-navy text-white">
-        <div className="wrap pt-8 pb-20 lg:pb-28">
-          <Breadcrumbs tone="dark" items={[crumbs[0], { name: "Hotelrenovierung" }]} />
-          <div className="mt-10 grid gap-14 lg:grid-cols-[1fr_460px] lg:gap-20">
-            <div className="min-w-0">
-              <h1 className="text-4xl leading-[1.05] font-extrabold text-white sm:text-5xl lg:text-6xl">
-                Hotelrenovierung im laufenden Betrieb – <span className="text-blue-bright">aus einer Hand.</span>
-              </h1>
-              <p className="mt-7 max-w-2xl text-lg leading-relaxed text-white/75 sm:text-xl">
-                Planung, Beratung, Koordination und Ausführung: Wir renovieren Zimmer, Bäder, Wellnessbereiche und Lobbys, während Ihre Gäste
-                weiter bei Ihnen wohnen.
-              </p>
-              <ul className="mt-8 space-y-3 text-[17px] text-white/90">
-                {[
-                  "Etagenweise Planung um Ihre Belegung herum",
-                  "Generalunternehmer für alle Gewerke – inkl. Möbel, Textilien, Licht",
-                  "Projektleiter und Einsatzleiter dauerhaft vor Ort",
-                ].map((t) => (
-                  <li key={t} className="flex gap-3">
-                    <Check light /> {t}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-12 grid grid-cols-5 gap-3">
-                <Photo src="hotel-zimmer.jpg" alt="Renoviertes Hotelzimmer" className="col-span-3 aspect-[4/3]" priority sizes="(min-width: 1024px) 35vw, 60vw" />
-                <div className="col-span-2 grid gap-3">
-                  <Photo src="hotel-bad.jpg" alt="Hotelbad nach der Renovierung" className="" sizes="20vw" />
-                  <Photo src="hotel-spa.jpg" alt="Wellnessbereich eines Hotels" className="" sizes="20vw" />
-                </div>
-              </div>
+      {/* Hero als Fliesenspiegel mit Hotel-Quiz */}
+      <section id="anfrage" className="bg-fuge p-(--spacing-fuge)">
+        <div className="fliesen mx-auto max-w-[1600px] lg:grid-cols-12">
+          <div className="bg-tanne px-6 pt-8 pb-12 text-weiss sm:px-10 lg:col-span-7 lg:px-14 lg:pb-16">
+            <Breadcrumbs tone="dark" items={[crumbs[0], { name: "Hotelrenovierung" }]} />
+            <h1 className="mt-12 text-[2.9rem] leading-[0.95] font-semibold text-weiss sm:text-7xl xl:text-[5.2rem]">
+              Hotelrenovierung im laufenden Betrieb.
+            </h1>
+            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-weiss/80 sm:text-[1.25rem]">
+              Planung, Beratung, Koordination und Ausführung aus einer Hand: Wir renovieren Zimmer, Bäder, Wellnessbereiche und Lobbys, während
+              Ihre Gäste weiter bei Ihnen wohnen.
+            </p>
+            <ul className="mt-9 space-y-2.5 text-[17px] text-weiss/90">
+              {[
+                "Etagenweise Planung um Ihre Belegung herum",
+                "Generalunternehmer für alle Gewerke – inklusive Möbel, Textilien, Licht",
+                "Projektleiter und Einsatzleiter dauerhaft vor Ort",
+              ].map((t) => (
+                <li key={t} className="flex gap-3">
+                  <Check light /> {t}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <aside className="bg-kalk px-5 py-9 sm:px-10 sm:py-12 lg:col-span-5 lg:row-span-2 lg:px-12">
+            <div className="lg:sticky lg:top-28">
+              <EstimateForm
+                            source="Hotelrenovierung"
+          title="Hotelprojekt anfragen"
+          uploads={false}
+          contactTitle="Fast geschafft."
+          contactHint="Ihr Projektleiter meldet sich persönlich."
+          submitLabel="Projekt anfragen"
+          responseTime="[24 h]"
+          steps={[
+            { q: "Was für ein Haus ist es?", opts: ["Stadt- / Businesshotel", "Ferien- / Wellnesshotel", "Tagungshotel", "Pension / Gasthof", "Hotelgruppe"] },
+            { q: "Wie viele Zimmer hat das Haus?", hint: "Eine grobe Schätzung reicht", opts: ["bis 20", "20–60", "60–150", "über 150"] },
+            { q: "Was möchten Sie renovieren?", hint: "Mehrfachauswahl möglich", multi: true, opts: ["Zimmer", "Bäder", "Wellness & Spa", "Lobby / Gastro", "Möbel & Textilien", "Komplett"] },
+            { q: "Wann soll es losgehen?", hint: "Wir planen um Ihre Belegung herum", opts: ["in 3 Monaten", "in 6 Monaten", "in 12 Monaten", "noch offen"] },
+            { q: "Bleibt das Hotel währenddessen geöffnet?", opts: ["Ja, etagenweise", "Teilweise geschlossen", "Komplett geschlossen", "noch offen"] },
+          ]}
+          fields={[
+            { name: "hotel", label: "Hotel", autoComplete: "organization" },
+            { name: "ort", label: "PLZ / Ort", autoComplete: "postal-code" },
+            { name: "name", label: "Ihr Name", autoComplete: "name", required: true },
+            { name: "telefon", label: "Telefon", type: "tel", autoComplete: "tel", required: true },
+            { name: "email", label: "E-Mail (optional)", type: "email", autoComplete: "email" },
+          ]}
+        />
             </div>
-            <aside className="lg:sticky lg:top-28 lg:self-start">
-              <div className="border-t-4 border-blue-bright bg-navy-soft px-6 py-8 sm:p-10">
-                <EstimateForm
-                  tone="dark"
-                  source="Hotelrenovierung"
-                  title="Hotelprojekt anfragen"
-                  uploads={false}
-                  contactTitle="Fast geschafft."
-                  contactHint="Ihr Projektleiter meldet sich persönlich."
-                  submitLabel="Projekt anfragen"
-                  responseTime="[24 h]"
-                  steps={[
-                    { q: "Was für ein Haus ist es?", opts: ["Stadt- / Businesshotel", "Ferien- / Wellnesshotel", "Tagungshotel", "Pension / Gasthof", "Hotelgruppe"] },
-                    { q: "Wie viele Zimmer hat das Haus?", hint: "Eine grobe Schätzung reicht", opts: ["bis 20", "20–60", "60–150", "über 150"] },
-                    { q: "Was möchten Sie renovieren?", hint: "Mehrfachauswahl möglich", multi: true, opts: ["Zimmer", "Bäder", "Wellness & Spa", "Lobby / Gastro", "Möbel & Textilien", "Komplett"] },
-                    { q: "Wann soll es losgehen?", hint: "Wir planen um Ihre Belegung herum", opts: ["in 3 Monaten", "in 6 Monaten", "in 12 Monaten", "noch offen"] },
-                    { q: "Bleibt das Hotel währenddessen geöffnet?", opts: ["Ja, etagenweise", "Teilweise geschlossen", "Komplett geschlossen", "noch offen"] },
-                  ]}
-                  fields={[
-                    { name: "hotel", label: "Hotel", autoComplete: "organization" },
-                    { name: "ort", label: "PLZ / Ort", autoComplete: "postal-code" },
-                    { name: "name", label: "Ihr Name", autoComplete: "name", required: true },
-                    { name: "telefon", label: "Telefon", type: "tel", autoComplete: "tel", required: true },
-                    { name: "email", label: "E-Mail (optional)", type: "email", autoComplete: "email" },
-                  ]}
-                />
-              </div>
-            </aside>
+          </aside>
+          <div className="fliesen grid-cols-[2fr_1fr_1fr] lg:col-span-7">
+            <Photo src="hotel-zimmer.jpg" alt="Renoviertes Hotelzimmer" className="min-h-48 sm:min-h-72" priority sizes="(min-width: 1024px) 30vw, 50vw" />
+            <Photo src="hotel-bad.jpg" alt="Hotelbad nach der Renovierung" className="min-h-48 sm:min-h-72" sizes="15vw" />
+            <Photo src="hotel-spa.jpg" alt="Wellnessbereich eines Hotels" className="min-h-48 sm:min-h-72" sizes="15vw" />
           </div>
         </div>
       </section>
@@ -176,13 +172,21 @@ export default function Hotelrenovierung() {
             </p>
           </div>
           <div className="mt-16">
-            <TradeIndex trades={areas} />
+            <TradeIndex
+              trades={areas}
+              fill={{
+                title: "Ihr Haus, Ihre Belegung",
+                text: "Nennen Sie uns Zimmerzahl und Zeitfenster – wir melden uns mit einem ersten Bauzeitenplan.",
+                href: "#anfrage",
+                cta: "Hotelprojekt anfragen",
+              }}
+            />
           </div>
         </div>
       </section>
 
       {/* Generalunternehmer */}
-      <section className="section bg-paper">
+      <section className="section bg-kalk">
         <div className="wrap grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
           <div className="relative">
             <Photo src="hotel-zimmer-2.jpg" alt="Hotelzimmer mit neuen Möbeln und Textilien" className="aspect-[4/5]" />
@@ -193,15 +197,15 @@ export default function Hotelrenovierung() {
               Wir übernehmen die komplette Kommunikation zwischen den Gewerken und mit den Lieferanten. Sie konzentrieren sich auf Ihre Gäste –
               wir arbeiten hinter den Kulissen.
             </p>
-            <ul className="mt-10 grid border-t border-line sm:grid-cols-2 sm:gap-x-10">
+            <ul className="mt-10 grid border-t border-fuge sm:grid-cols-2 sm:gap-x-10">
               {trades.map((t) => (
-                <li key={t} className="flex min-h-14 items-center gap-3 border-b border-line py-3 font-medium text-navy">
+                <li key={t} className="flex min-h-14 items-center gap-3 border-b border-fuge py-3 font-medium text-tanne">
                   <Check /> {t}
                 </li>
               ))}
             </ul>
-            <p className="mt-8 text-ink-2">
-              Als <strong className="text-navy">Premiumpartner von Villeroy &amp; Boch</strong> beraten wir Sie zu Keramik, Armaturen und
+            <p className="mt-8 text-schiefer-2">
+              Als <strong className="text-tanne">Premiumpartner von Villeroy &amp; Boch</strong> beraten wir Sie zu Keramik, Armaturen und
               Badmöbeln – passend zu Ihrem Haus.
             </p>
           </div>
@@ -226,69 +230,64 @@ export default function Hotelrenovierung() {
             <h2 className="h2">Ihre Gäste merken möglichst wenig davon</h2>
             <p className="lead mt-6">Jedes gesperrte Zimmer kostet Umsatz. Deshalb planen wir die Baustelle wie einen Teil Ihres Hotelbetriebs.</p>
           </div>
-          <ol className="border-t border-line">
+          <ul className="fliesen bg-fuge p-(--spacing-fuge) sm:grid-cols-2">
             {[
               ["Etagenweise Bauabschnitte", "Gesperrt wird nur, was gerade in Arbeit ist – der Rest bleibt buchbar."],
               ["Feste Lärmzeiten", "Laute Arbeiten in abgestimmten Zeitfenstern, außerhalb von Frühstück und Nachtruhe."],
               ["Saubere Wege", "Eigene Materialwege, Staubschutz und tägliche Reinigung der Baustellenbereiche."],
               ["Termintreue", "Bauzeitenplan nach Belegung und Saison – mit Puffer für Lieferzeiten."],
-            ].map(([t, text], i) => (
-              <li key={t} className="grid grid-cols-[auto_1fr] gap-6 border-b border-line py-7">
-                <span className="num font-display text-sm font-semibold text-blue">{String(i + 1).padStart(2, "0")}</span>
-                <span>
-                  <span className="block font-display text-xl font-bold text-navy">{t}</span>
-                  <span className="mt-1 block text-ink-2">{text}</span>
-                </span>
+            ].map(([t, text]) => (
+              <li key={t} className="bg-kalk p-7">
+                <span className="block font-display text-[1.75rem] leading-none font-semibold text-tanne">{t}</span>
+                <span className="mt-3 block text-schiefer-2">{text}</span>
               </li>
             ))}
-          </ol>
+          </ul>
         </div>
       </section>
 
       {/* Projektbeispiel */}
-      <section className="section bg-paper">
+      <section className="section bg-kalk">
         <div className="wrap grid items-center gap-14 lg:grid-cols-[7fr_5fr] lg:gap-20">
           <BeforeAfter after="hotel-bad-3.jpg" alt="Hotelbad-Renovierung" />
           <div>
-            <p className="text-sm text-slate">Projektbeispiel · 4*-Wellnesshotel · Sauerland</p>
-            <h2 className="mt-3 text-3xl leading-tight font-bold sm:text-4xl">
+            <p className="text-[15px] text-stein">Projektbeispiel: 4*-Wellnesshotel im Sauerland</p>
+            <h2 className="mt-2 text-4xl leading-none sm:text-5xl">
               <span className="todo">[Projektname]</span>
             </h2>
-            <dl className="mt-8 grid grid-cols-3 border-y border-line py-6">
-              {[
-                ["[62]", "Zimmer"],
-                ["[8]", "Wochen"],
-                ["[0]", "Schließtage"],
-              ].map(([v, l]) => (
-                <div key={l}>
-                  <dt className="sr-only">{l}</dt>
-                  <dd className="font-display text-3xl font-extrabold text-slate/50">{v}</dd>
-                  <dd className="text-sm text-slate">{l}</dd>
-                </div>
-              ))}
-            </dl>
-            <p className="mt-6 text-ink-2">
+            <div className="mt-8">
+              <Masskette
+                items={[
+                  ["[62]", "Zimmer"],
+                  ["[8]", "Wochen"],
+                  ["[0]", "Schließtage"],
+                ]}
+              />
+            </div>
+            <p className="mt-6 text-schiefer-2">
               <span className="todo">[Ausgangslage, Lösung, Ergebnis – Hotelname nur mit Freigabe]</span>
             </p>
             <Link href="/referenzen" className="link-arrow mt-6">
-              Alle Hotelprojekte →
+              Alle Hotelprojekte
             </Link>
           </div>
         </div>
       </section>
 
       {/* Hotelbäder in 3 Tagen */}
-      <section className="bg-blue-tint">
-        <div className="wrap grid items-center gap-10 py-16 lg:grid-cols-[1fr_auto]">
+      <section className="section">
+        <div className="wrap">
+        <div className="grid items-center gap-10 rounded-[28px] bg-kalk px-8 py-12 sm:px-12 lg:grid-cols-[1fr_auto]">
           <div>
-            <p className="font-display text-2xl font-bold text-navy sm:text-3xl">Hotelbäder in ca. 3 Tagen – fugenlos.</p>
-            <p className="mt-3 max-w-2xl text-ink-2">
+            <p className="font-display text-[2.2rem] leading-none font-semibold text-tanne sm:text-[2.6rem]">Hotelbäder in ca. 3 Tagen – fugenlos.</p>
+            <p className="mt-3 max-w-2xl text-schiefer-2">
               Wenn Zimmer nur kurz gesperrt werden können: Mit Mein Zauberbad erneuern wir Bäder ohne wochenlange Baustelle, zum Festpreis.
             </p>
           </div>
-          <a href={site.zauberbadUrl} target="_blank" rel="noopener" className="btn-primary">
+          <a href={site.zauberbadUrl} target="_blank" rel="noopener" className="btn-primary rounded-full px-8">
             Mehr auf meinzauberbad.de ↗
           </a>
+        </div>
         </div>
       </section>
 
@@ -298,10 +297,10 @@ export default function Hotelrenovierung() {
         quotes={["[Zitat Hotelier: Termin gehalten, Betrieb lief weiter]", "[Zitat: Ein Ansprechpartner für alle Gewerke]", "[Zitat: Gäste haben kaum etwas gemerkt]"]}
       />
 
-      <div className="border-t border-line" />
+      <div className="border-t border-fuge" />
       <Faq title="Häufige Fragen zur Hotelrenovierung" items={faq} />
 
-      <section className="section bg-paper">
+      <section className="section bg-kalk">
         <div className="wrap">
           <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
             <div>

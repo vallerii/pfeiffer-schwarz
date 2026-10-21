@@ -4,7 +4,7 @@ export function OptionButton({
   selected,
   onClick,
   children,
-  tone = "dark",
+  tone = "light",
 }: {
   selected: boolean;
   onClick: () => void;
@@ -12,15 +12,15 @@ export function OptionButton({
   tone?: "dark" | "light";
 }) {
   const base =
-    "inline-flex min-h-12 items-center border px-5 text-[15px] font-medium transition-colors duration-150";
+    "inline-flex min-h-12 items-center gap-2 rounded-(--radius-kante) border px-5 text-[16px] font-medium transition-colors duration-150";
   const styles =
     tone === "dark"
       ? selected
-        ? "border-white bg-white text-navy"
-        : "border-white/25 text-white hover:border-white/70"
+        ? "border-messing bg-messing text-tanne-tief"
+        : "border-weiss/25 text-weiss hover:border-weiss/70"
       : selected
-        ? "border-navy bg-navy text-white"
-        : "border-line text-ink hover:border-navy";
+        ? "border-tanne bg-tanne text-weiss"
+        : "border-fuge bg-weiss text-schiefer hover:border-tanne";
   return (
     <button type="button" aria-pressed={selected} onClick={onClick} className={`${base} ${styles}`}>
       {children}
@@ -28,13 +28,18 @@ export function OptionButton({
   );
 }
 
-export function Progress({ value, tone = "dark" }: { value: number; tone?: "dark" | "light" }) {
+/** Fortschritt als Reihe kleiner Kacheln: eine Kachel pro Schritt */
+export function Progress({ current, total, tone = "light" }: { current: number; total: number; tone?: "dark" | "light" }) {
   return (
-    <div className={`h-1 overflow-hidden ${tone === "dark" ? "bg-white/15" : "bg-line"}`}>
-      <div
-        className="h-full bg-blue-bright transition-[width] duration-500 ease-(--ease-out-soft)"
-        style={{ width: `${Math.max(4, value)}%` }}
-      />
+    <div className="flex gap-1" aria-hidden="true">
+      {Array.from({ length: total }, (_, i) => (
+        <span
+          key={i}
+          className={`h-1.5 flex-1 transition-colors duration-300 ${
+            i < current ? (tone === "dark" ? "bg-messing" : "bg-tanne") : tone === "dark" ? "bg-weiss/15" : "bg-fuge"
+          }`}
+        />
+      ))}
     </div>
   );
 }
