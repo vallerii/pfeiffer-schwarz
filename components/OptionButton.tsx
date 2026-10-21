@@ -12,15 +12,15 @@ export function OptionButton({
   tone?: "dark" | "light";
 }) {
   const base =
-    "inline-flex min-h-12 items-center border px-5 text-[15px] font-medium transition-colors duration-150";
+    "inline-flex min-h-11 items-center px-4 t-body font-medium transition-colors duration-150";
   const styles =
     tone === "dark"
       ? selected
-        ? "border-white bg-white text-navy"
-        : "border-white/25 text-white hover:border-white/70"
+        ? "bg-white text-blue"
+        : "bg-white/12 text-white hover:bg-white/25"
       : selected
-        ? "border-navy bg-navy text-white"
-        : "border-line text-ink hover:border-navy";
+        ? "bg-blue text-white"
+        : "bg-paper text-ink hover:bg-blue-tint";
   return (
     <button type="button" aria-pressed={selected} onClick={onClick} className={`${base} ${styles}`}>
       {children}
@@ -30,9 +30,9 @@ export function OptionButton({
 
 export function Progress({ value, tone = "dark" }: { value: number; tone?: "dark" | "light" }) {
   return (
-    <div className={`h-1 overflow-hidden ${tone === "dark" ? "bg-white/15" : "bg-line"}`}>
+    <div className={`h-1.5 overflow-hidden ${tone === "dark" ? "bg-white/20" : "bg-paper"}`}>
       <div
-        className="h-full bg-blue-bright transition-[width] duration-500 ease-(--ease-out-soft)"
+        className={`h-full transition-[width] duration-500 ease-(--ease-out-soft) ${tone === "dark" ? "bg-white" : "bg-blue"}`}
         style={{ width: `${Math.max(4, value)}%` }}
       />
     </div>

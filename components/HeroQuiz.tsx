@@ -94,42 +94,33 @@ export function HeroQuiz() {
 
   return (
     <div className="text-white" aria-live="polite">
-      <div className="mb-4 flex min-h-8 items-center justify-between text-sm text-white/60">
+      <div className="small mb-3 flex min-h-8 items-center justify-between text-white/75">
         <span className="num">{label}</span>
         {!isStart && !done && (
-          <button type="button" onClick={back} className="font-medium text-white hover:underline">
-            ← Zurück
+          <button type="button" onClick={back} className="font-semibold text-white underline">
+            Zurück
           </button>
         )}
       </div>
       <Progress value={pct} />
 
-      <div className="mt-8">
+      <div className="mt-5">
         {isStart && (
           <>
-            <p className="font-display text-2xl font-bold sm:text-3xl">Was möchten Sie renovieren?</p>
-            <p className="mt-2 text-white/60">In vier Klicks zur passenden Ansprechperson.</p>
-            <ul className="mt-7 border-t border-white/15">
+            <p className="t-body font-semibold">Was möchten Sie renovieren?</p>
+            <ul className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
               {(Object.keys(PATHS) as PathId[]).map((id) => (
-                <li key={id} className="border-b border-white/15">
+                <li key={id}>
                   <button
                     type="button"
                     onClick={() => {
                       setPath(id);
                       setStep(0);
                     }}
-                    className="group flex min-h-18 w-full items-center gap-4 py-4 text-left"
+                    className="group flex h-full w-full flex-col gap-1 bg-white p-3.5 text-left text-blue transition-colors duration-200 hover:bg-navy hover:text-white focus-visible:bg-navy focus-visible:text-white"
                   >
-                    <span className="flex-1">
-                      <span className="block text-lg font-semibold">{PATHS[id].title}</span>
-                      <span className="block text-sm text-white/55">{PATHS[id].sub}</span>
-                    </span>
-                    <span
-                      aria-hidden="true"
-                      className="flex h-10 w-10 items-center justify-center border border-white/25 transition group-hover:border-blue-bright group-hover:bg-blue-bright"
-                    >
-                      →
-                    </span>
+                    <span className="block t-body leading-tight font-semibold">{PATHS[id].title}</span>
+                    <span className="small block text-ink-2 group-hover:text-white/80 group-focus-visible:text-white/80">{PATHS[id].sub}</span>
                   </button>
                 </li>
               ))}
@@ -139,9 +130,9 @@ export function HeroQuiz() {
 
         {q && (
           <>
-            <p className="font-display text-2xl font-bold sm:text-3xl">{q.q}</p>
-            {q.hint && <p className="mt-2 text-white/60">{q.hint}</p>}
-            <div className="mt-7 flex flex-wrap gap-2.5">
+            <p className="t-lead leading-tight font-semibold">{q.q}</p>
+            {q.hint && <p className="small mt-1.5 text-white/75">{q.hint}</p>}
+            <div className="mt-5 flex flex-wrap gap-2">
               {q.opts.map((o) => (
                 <OptionButton key={o} selected={picked.includes(o)} onClick={() => pick(o)}>
                   {o}
@@ -153,7 +144,7 @@ export function HeroQuiz() {
                 type="button"
                 disabled={picked.length === 0}
                 onClick={() => setStep(step + 1)}
-                className="btn-primary mt-8 w-full disabled:cursor-not-allowed disabled:opacity-40"
+                className="btn-light mt-6 w-full disabled:cursor-not-allowed disabled:opacity-40"
               >
                 Weiter
               </button>
@@ -163,14 +154,14 @@ export function HeroQuiz() {
 
         {isBad && (
           <>
-            <p className="font-display text-2xl font-bold sm:text-3xl">Neues Bad in 3 Tagen</p>
-            <p className="mt-3 leading-relaxed text-white/70">
+            <p className="t-lead leading-tight font-semibold">Neues Bad in 3 Tagen</p>
+            <p className="mt-2 leading-snug text-white/85">
               Fugenlose Bäder zum Festpreis – über unser System Mein Zauberbad. Planung in 3D, Umbau in der Regel in drei Tagen.
             </p>
-            <a href={site.zauberbadUrl} target="_blank" rel="noopener" className="btn-primary mt-8 w-full">
+            <a href={site.zauberbadUrl} target="_blank" rel="noopener" className="btn-light mt-6 w-full">
               Weiter zu meinzauberbad.de ↗
             </a>
-            <button type="button" onClick={() => setContact(true)} className="mt-4 w-full py-2 text-sm font-medium text-white/80 hover:text-white">
+            <button type="button" onClick={() => setContact(true)} className="mt-2 w-full py-2 t-body font-semibold text-white underline">
               Lieber direkt Rückruf anfordern
             </button>
           </>
@@ -178,19 +169,19 @@ export function HeroQuiz() {
 
         {isContact && (
           <form onSubmit={submit}>
-            <p className="font-display text-2xl font-bold sm:text-3xl">Fast geschafft.</p>
-            <p className="mt-2 text-white/60">
+            <p className="t-lead leading-tight font-semibold">Fast geschafft.</p>
+            <p className="small mt-1.5 text-white/80">
               Wir melden uns innerhalb von <span className="todo">[24 h]</span>.
             </p>
-            <div className="mt-7 grid gap-4">
+            <div className="mt-4 grid gap-3">
               <DarkField label="PLZ / Ort des Objekts" name="ort" autoComplete="postal-code" />
               <DarkField label="Name" name="name" autoComplete="name" required />
               <DarkField label="Telefon" name="telefon" type="tel" autoComplete="tel" required />
             </div>
-            <button type="submit" className="btn-primary mt-7 w-full">
+            <button type="submit" className="btn-light mt-5 w-full">
               Anfrage senden
             </button>
-            <p className="mt-3 text-xs text-white/50">
+            <p className="small mt-2 text-white/80">
               Mit dem Absenden stimmen Sie der{" "}
               <a href="/datenschutz" className="underline">
                 Datenschutzerklärung
@@ -202,14 +193,14 @@ export function HeroQuiz() {
 
         {done && (
           <div className="py-6">
-            <span className="flex h-14 w-14 items-center justify-center bg-blue-bright text-2xl" aria-hidden="true">
-              ✓
+            <span className="flex h-12 w-12 items-center justify-center bg-white text-blue" aria-hidden="true">
+              <svg viewBox="0 0 24 24" className="h-6 w-6"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" strokeWidth="2.6" /></svg>
             </span>
-            <p className="mt-6 font-display text-2xl font-bold sm:text-3xl">Danke! Ihre Anfrage ist da.</p>
-            <p className="mt-2 text-white/70">
+            <p className="mt-5 t-lead leading-tight font-semibold">Danke! Ihre Anfrage ist da.</p>
+            <p className="mt-2 text-white/85">
               <span className="todo">[Name Projektleiter]</span> ruft Sie zurück.
             </p>
-            <button type="button" onClick={reset} className="btn-light mt-8">
+            <button type="button" onClick={reset} className="btn-light mt-6">
               Neue Anfrage
             </button>
           </div>
@@ -221,11 +212,11 @@ export function HeroQuiz() {
 
 function DarkField({ label, ...props }: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
-    <label className="grid gap-1.5 text-sm font-medium text-white/75">
+    <label className="small grid gap-1 font-medium text-white/85">
       {label}
       <input
         {...props}
-        className="h-12 border border-white/20 bg-white/5 px-4 text-base text-white placeholder:text-white/40 focus:border-blue-bright focus:outline-none"
+        className="h-11 bg-white px-3 text-base text-ink focus:outline-2 focus:outline-offset-2 focus:outline-white"
       />
     </label>
   );

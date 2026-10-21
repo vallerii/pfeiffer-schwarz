@@ -27,7 +27,7 @@ function DesktopDropdown({ group }: { group: NavGroup }) {
     >
       <button
         type="button"
-        className="flex min-h-12 items-center gap-1.5 text-[15px] font-medium text-navy hover:text-blue"
+        className="flex min-h-12 items-center gap-1.5 text-[16px] font-medium text-navy hover:text-blue"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
       >
@@ -35,15 +35,13 @@ function DesktopDropdown({ group }: { group: NavGroup }) {
         <Chevron open={open} />
       </button>
       <div
-        className={`absolute top-full left-1/2 z-40 -translate-x-1/2 pt-3 transition duration-200 ${
-          open ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0"
-        }`}
+        className={`absolute top-full left-1/2 z-40 -translate-x-1/2 pt-3 ${open ? "block" : "hidden"}`}
       >
-        <div className="flex gap-10 bg-white p-7 shadow-[0_24px_60px_-20px_rgba(16,28,40,0.35)] ring-1 ring-navy/5">
+        <div className="menu-shadow flex gap-10 bg-paper p-7">
           <ul className="w-64">
             <li>
-              <Link href={group.href} className="mb-2 block border-b border-line pb-3 font-display font-bold text-navy hover:text-blue">
-                {group.label} im Überblick →
+              <Link href={group.href} className="mb-2 block pb-2 font-semibold text-navy underline decoration-blue decoration-2 hover:text-blue">
+                {group.label} im Überblick
               </Link>
             </li>
             {group.items.map((item) => (
@@ -56,7 +54,7 @@ function DesktopDropdown({ group }: { group: NavGroup }) {
             ))}
           </ul>
           {group.extra && (
-            <div className="w-56 space-y-6 border-l border-line pl-10">
+            <div className="w-56 space-y-6 pl-2">
               {group.extra.map((block) => (
                 <div key={block.title}>
                   <p className="mb-2 text-[13px] font-semibold text-slate">{block.title}</p>
@@ -82,37 +80,30 @@ function DesktopDropdown({ group }: { group: NavGroup }) {
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
-  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   // Seiten mit eigenem Anfrageformular springen dorthin, alle anderen zum Quiz auf der Startseite
   const formHref = pathname.startsWith("/bau-innenausbau/") || pathname === "/hotelrenovierung" ? "#anfrage" : "/#anfrage";
 
   useEffect(() => setMenuOpen(false), [pathname]);
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
   }, [menuOpen]);
 
   return (
     <>
-      <div className="bg-navy-deep text-[13px] text-white/70">
+      <div className="bg-paper text-[13px] text-ink-2">
         <div className="wrap flex min-h-9 items-center justify-between gap-6">
           <span className="hidden sm:inline">
             {site.street}, {site.zip} {site.city} · bundesweit im Einsatz
           </span>
           <nav aria-label="Service" className="flex items-center gap-5">
             {utilityNav.map((item) => (
-              <Link key={item.href} href={item.href} className="hidden hover:text-white md:inline">
+              <Link key={item.href} href={item.href} className="hidden hover:text-blue md:inline">
                 {item.label}
               </Link>
             ))}
-            <a href={site.phoneHref} className="flex items-center gap-2 font-semibold text-white">
-              <span className="h-2 w-2 bg-blue-bright ring-4 ring-blue-bright/25" aria-hidden="true" />
+            <a href={site.phoneHref} className="flex items-center gap-2 font-semibold text-blue">
+              <span className="h-2 w-2 rounded-full bg-blue" aria-hidden="true" />
               Wasser- oder Brandschaden?
             </a>
           </nav>
@@ -120,11 +111,9 @@ export function Header() {
       </div>
 
       <header
-        className={`sticky top-0 z-30 bg-white/90 backdrop-blur-md transition-shadow ${
-          scrolled ? "shadow-[0_1px_0_0_var(--color-line)]" : ""
-        }`}
+        className="sticky top-0 z-30 bg-white"
       >
-        <div className="wrap flex min-h-20 items-center gap-8">
+        <div className="wrap flex min-h-16 items-center gap-3 sm:gap-8">
           <Logo />
           <nav aria-label="Hauptnavigation" className="ml-auto hidden items-center gap-6 whitespace-nowrap 2xl:gap-8 xl:flex">
             {mainNav.map((item) =>
@@ -134,7 +123,7 @@ export function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`text-[15px] font-medium hover:text-blue ${pathname === item.href ? "text-blue" : "text-navy"}`}
+                  className={`text-[16px] font-medium hover:text-blue ${pathname === item.href ? "text-blue" : "text-navy"}`}
                 >
                   {item.label}
                 </Link>
@@ -149,9 +138,20 @@ export function Header() {
               Projekt anfragen
             </Link>
           </div>
+          {/* Auf kleinen Bildschirmen bleiben Anrufen und Anfragen in der fixierten Kopfzeile */}
+          <div className="ml-auto flex items-center gap-1.5 xl:hidden">
+            <a href={site.phoneHref} aria-label={`Anrufen: ${site.phone}`} className="flex h-11 w-11 items-center justify-center bg-paper text-navy">
+              <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
+                <path d="M6.6 3.5h3l1.4 4.2-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4.2 1.4v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+              </svg>
+            </a>
+            <Link href={formHref} className="btn-primary min-h-11 px-4" onClick={() => setMenuOpen(false)}>
+              Anfragen
+            </Link>
+          </div>
           <button
             type="button"
-            className="ml-auto flex h-12 w-12 items-center justify-center text-navy xl:hidden"
+            className="-mr-2 flex h-12 w-11 shrink-0 items-center justify-center text-navy xl:hidden"
             aria-label={menuOpen ? "Menü schließen" : "Menü öffnen"}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((v) => !v)}
@@ -165,17 +165,15 @@ export function Header() {
 
         {/* Mobiles Menü */}
         <div
-          className={`fixed inset-x-0 top-20 bottom-0 z-30 overflow-y-auto bg-white transition xl:hidden ${
-            menuOpen ? "visible opacity-100" : "invisible opacity-0"
-          }`}
+          className={`fixed inset-x-0 top-16 bottom-0 z-30 overflow-y-auto bg-white xl:hidden ${menuOpen ? "block" : "hidden"}`}
         >
           <nav aria-label="Mobile Navigation" className="wrap pt-2 pb-32">
             {mainNav.map((item) =>
               isGroup(item) ? (
-                <div key={item.href} className="border-b border-line">
+                <div key={item.href}>
                   <button
                     type="button"
-                    className="flex min-h-16 w-full items-center justify-between font-display text-xl font-bold text-navy"
+                    className="flex min-h-14 w-full items-center justify-between text-xl font-semibold text-navy"
                     aria-expanded={openGroup === item.href}
                     onClick={() => setOpenGroup(openGroup === item.href ? null : item.href)}
                   >
@@ -203,7 +201,7 @@ export function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="flex min-h-16 items-center border-b border-line font-display text-xl font-bold text-navy"
+                  className="flex min-h-14 items-center text-xl font-semibold text-navy"
                 >
                   {item.label}
                 </Link>
@@ -220,15 +218,6 @@ export function Header() {
         </div>
       </header>
 
-      {/* Fixierte Leiste auf dem Smartphone */}
-      <div className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-2 gap-2 border-t border-line bg-white/95 p-2 backdrop-blur lg:hidden">
-        <a href={site.phoneHref} className="btn-ghost">
-          Anrufen
-        </a>
-        <Link href={formHref} className="btn-primary" onClick={() => setMenuOpen(false)}>
-          Anfragen
-        </Link>
-      </div>
     </>
   );
 }
