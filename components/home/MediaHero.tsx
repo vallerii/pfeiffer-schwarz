@@ -11,12 +11,12 @@ import { site } from "@/lib/site";
  */
 export function MediaHero() {
   return (
-    <section id="anfrage" aria-labelledby="hero-title" className="px-3 pt-3">
-      <div className="panel relative isolate lg:min-h-[max(680px,calc(100svh-112px))]">
-        <Image src="/img/fliesen-bad-3.jpg" alt="" fill priority sizes="100vw" className="-z-10 object-cover" />
+    <section id="anfrage" aria-labelledby="hero-title">
+      <div className="relative isolate overflow-hidden lg:min-h-[max(680px,calc(100svh-112px))]">
+        <Image src="/img/fliesen-bad-3.jpg" alt="" fill loading="eager" fetchPriority="high" sizes="100vw" className="-z-10 object-cover" />
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-white/55 lg:bg-transparent lg:bg-[linear-gradient(90deg,rgb(255_255_255/0.94)_0%,rgb(255_255_255/0.86)_38%,rgb(255_255_255/0)_70%)]" />
 
-        <div className="grid gap-10 px-5 pt-24 pb-6 sm:px-10 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end lg:gap-16 lg:pt-[clamp(120px,18svh,190px)] lg:pb-10">
+        <div className="wrap grid gap-10 pt-24 pb-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end lg:gap-16 lg:pt-[clamp(120px,18svh,190px)] lg:pb-14">
           <div className="max-w-[720px] pb-2">
             <h1 id="hero-title" className="text-[2.6rem] leading-[1.06] font-semibold tracking-[-0.04em] sm:text-[3.6rem] lg:text-[70px] lg:leading-[77px]">
               <span className="text-navy/45">Hotelrenovierung &amp; Innenausbau.</span> <span className="text-navy">Aus einer Hand.</span>
@@ -38,7 +38,7 @@ export function MediaHero() {
         </div>
       </div>
 
-      <div className="mx-auto flex max-w-(--container-site) flex-col gap-6 px-2 py-8 sm:px-7 lg:flex-row lg:items-center lg:justify-between">
+      <div className="wrap flex flex-col gap-6 py-8 lg:flex-row lg:items-center lg:justify-between">
         <p className="max-w-[60ch] text-ink-2">
           <span className="font-semibold text-navy">Seit {site.since}</span> renovieren wir Hotels im laufenden Betrieb und bauen Wohnungen, Häuser und
           Gewerbe aus.
