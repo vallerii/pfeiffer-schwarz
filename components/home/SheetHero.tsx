@@ -54,8 +54,8 @@ function Column({ frames, offset, start, className = "" }: { frames: F[]; offset
         className="flex flex-col gap-3 lg:absolute lg:inset-x-0 lg:bottom-0 lg:top-[calc(-1*var(--o))]"
         style={{ ["--o" as string]: `${-offset}px` }}
       >
-        {frames.map((f, i) => (
-          <Frame key={f.src} {...f} tone={start + i} fill priority={start < 6} className={i > 1 ? "max-lg:hidden" : ""} sizes="(min-width: 1024px) 16vw, 48vw" />
+        {frames.slice(0, 3).map((f, i) => (
+          <Frame key={f.src} {...f} tone={2} muted fill priority={start < 6} className={i > 1 ? "max-lg:hidden" : ""} sizes="(min-width: 1024px) 16vw, 48vw" />
         ))}
       </div>
     </div>
@@ -65,9 +65,9 @@ function Column({ frames, offset, start, className = "" }: { frames: F[]; offset
 /** Spalte über bzw. unter dem Türschild */
 function Part({ frames, start, top = false, col }: { frames: F[]; start: number; top?: boolean; col: string }) {
   return (
-    <div className={`hidden min-h-0 flex-col gap-3 overflow-hidden lg:flex ${top ? "lg:row-start-1 justify-end" : "lg:row-start-3"} ${col}`}>
+    <div className={`hidden min-h-0 flex-col gap-3 overflow-hidden lg:flex ${top ? "lg:row-start-1" : "lg:row-start-3"} ${col}`}>
       {frames.map((f, i) => (
-        <Frame key={f.src} {...f} tone={start + i} fill={!top} sizes="16vw" priority={top} imgClassName={top ? "max-h-[220px]" : ""} />
+        <Frame key={f.src} {...f} tone={2} muted fill sizes="16vw" priority={top} />
       ))}
     </div>
   );
@@ -77,9 +77,9 @@ export function SheetHero() {
   const [c1, c2, c3, c4, c5, c6] = COLS;
   return (
     <section id="anfrage" aria-labelledby="hero-title" className="overflow-hidden px-4 pb-14 sm:px-5 lg:pb-0">
-      <div className="grid grid-cols-2 gap-2 pt-3 lg:min-h-[calc(100svh-100px)] lg:grid-cols-6 lg:grid-rows-[minmax(110px,14svh)_auto_minmax(110px,1fr)] lg:gap-3">
+      <div className="grid grid-cols-2 gap-2 pt-3 lg:grid-cols-6 lg:grid-rows-[clamp(130px,18svh,190px)_auto] lg:gap-3">
         {/* Das Türschild: blau wie die Arbeitsjacken, mit Loch für die Klinke */}
-        <div className="relative col-span-2 bg-blue px-5 pt-14 pb-6 text-white sm:px-8 lg:col-span-3 lg:col-start-3 lg:row-start-2 lg:px-9">
+        <div className="relative col-span-2 bg-blue px-5 pt-14 pb-6 text-white sm:px-8 lg:col-span-3 lg:col-start-3 lg:row-start-2 lg:px-9 lg:pt-12">
           <span aria-hidden="true" className="absolute top-0 left-1/2 h-7 w-2 -translate-x-1/2 bg-white" />
           <span aria-hidden="true" className="absolute top-5 left-1/2 h-9 w-9 -translate-x-1/2 rounded-full bg-white" />
           <p className="flex items-center gap-2.5 t-lead leading-none font-semibold tracking-[-0.02em]">
@@ -88,14 +88,14 @@ export function SheetHero() {
           </p>
           <h1
             id="hero-title"
-            className="mt-6 text-[2.6rem] leading-[0.95] font-semibold tracking-[-0.04em] text-white sm:text-[3.6rem] lg:text-[min(4.7vw,4.8rem)]"
+            className="mt-5 text-[2.6rem] leading-[0.95] font-semibold tracking-[-0.04em] text-white sm:text-[3.6rem] lg:text-[min(4.7vw,8.4svh,4.8rem)]"
           >
             Hotelrenovierung &amp; Innenausbau.
           </h1>
-          <p className="t-lead mt-5 max-w-[46ch] text-white">
+          <p className="t-lead mt-4 max-w-[46ch] text-white">
             Aus einer Hand, mit 40 eigenen Fachkräften aus Bad Laasphe. Ihr Hotel bleibt geöffnet.
           </p>
-          <div className="mt-7">
+          <div className="mt-6">
             <HeroQuiz />
           </div>
           <p className="small mt-5 flex flex-wrap gap-x-5 gap-y-1 font-medium">
@@ -111,15 +111,12 @@ export function SheetHero() {
           </p>
         </div>
 
-        <Column {...c1} start={0} className="pt-[60px] lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:pt-0" />
-        <Column {...c2} start={4} className="lg:col-start-2 lg:row-span-3 lg:row-start-1" />
+        <Column {...c1} start={0} className="pt-[60px] lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:pt-0" />
+        <Column {...c2} start={4} className="lg:col-start-2 lg:row-span-2 lg:row-start-1" />
         <Part frames={c3.frames.slice(0, 1)} start={2} top col="lg:col-start-3" />
         <Part frames={c4.frames.slice(0, 1)} start={1} top col="lg:col-start-4" />
         <Part frames={c5.frames.slice(0, 1)} start={3} top col="lg:col-start-5" />
-        <Part frames={c3.frames.slice(1)} start={3} col="lg:col-start-3" />
-        <Part frames={c4.frames.slice(1)} start={0} col="lg:col-start-4" />
-        <Part frames={c5.frames.slice(1, 3)} start={2} col="lg:col-start-5" />
-        <Column {...c6} start={1} className="hidden lg:col-start-6 lg:row-span-3 lg:row-start-1 lg:block" />
+        <Column {...c6} start={1} className="hidden lg:col-start-6 lg:row-span-2 lg:row-start-1 lg:block" />
       </div>
     </section>
   );

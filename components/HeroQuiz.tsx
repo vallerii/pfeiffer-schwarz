@@ -94,6 +94,8 @@ export function HeroQuiz() {
 
   return (
     <div className="text-white" aria-live="polite">
+      {!isStart && (
+        <>
       <div className="small mb-3 flex min-h-8 items-center justify-between text-white/75">
         <span className="num">{label}</span>
         {!isStart && !done && (
@@ -103,8 +105,10 @@ export function HeroQuiz() {
         )}
       </div>
       <Progress value={pct} />
+        </>
+      )}
 
-      <div className="mt-5">
+      <div className={isStart ? "" : "mt-5"}>
         {isStart && (
           <>
             <p className="t-body font-semibold">Was möchten Sie renovieren?</p>

@@ -2,13 +2,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { SheetHero } from "@/components/home/SheetHero";
 import { OccupancyBoard } from "@/components/home/OccupancyBoard";
-import { TradeRows } from "@/components/home/TradeRows";
 import { Moments } from "@/components/home/Moments";
-import { BathIndex } from "@/components/home/BathIndex";
-import { Ledger } from "@/components/home/Ledger";
-import { Frame } from "@/components/Frame";
+import { Frame, Mark } from "@/components/Frame";
 import { Todo } from "@/components/Blocks";
 import { hotelNav, site } from "@/lib/site";
+
+const hotelImages: Record<string, string> = {
+  "/hotelrenovierung/hotelzimmer": "hotel-zimmer.jpg",
+  "/hotelrenovierung/hotelbaeder": "hotel-bad-3.jpg",
+  "/hotelrenovierung/wellness-spa": "hotel-spa.jpg",
+  "/hotelrenovierung/lobby-gastro": "innenausbau-4.jpg",
+  "/hotelrenovierung/hotelmoebel": "hotel-zimmer-2.jpg",
+  "/hotelrenovierung/komplettsanierung": "hotel-terrasse.jpg",
+};
 
 const faq = [
   {
@@ -78,42 +84,12 @@ const tradeGroups = [
 ];
 
 const moments = [
-  { title: "Zuerst kommen wir vorbei", text: "Ihr Projektleiter nimmt die Räume auf und hört zu, was Sie vorhaben.", img: "team-einsatz.jpg", alt: "Monteur am Firmenwagen", space: 120 },
-  { title: "Dann sehen Sie es vorher", text: "Fliesen, Möbel, Licht: in der 3D-Planung, bevor wir anfangen.", img: "fliesen-bad-3.jpg", alt: "Fertiges Bad mit Dachschräge", space: 40 },
-  { title: "Danach ein klares Angebot", text: "Alle Positionen transparent und persönlich besprochen.", img: "maler-4.jpg", alt: "Farbfächer und Malerrolle", space: 96 },
-  { title: "Ein Ansprechpartner bleibt", text: "Vom ersten Termin bis zur Übergabe dieselbe Person.", img: "innenausbau-7.jpg", alt: "Fertig ausgebautes Zimmer", space: 16 },
-  { title: "Unsere Teams bauen", text: "Festangestellte Fachkräfte statt Subunternehmer-Kette.", img: "trockenbau-2.jpg", alt: "Trockenbau im Rohbau", space: 140 },
-  { title: "Zum Schluss die Übergabe", text: "Gemeinsame Abnahme, sauber hinterlassen.", img: "sanitaer-3.jpg", alt: "Fertige Dusche mit Lichtleiste", space: 64 },
-];
-
-const bathCols = [
-  {
-    name: "So läuft es",
-    items: [
-      { name: "Beratung zu Hause", note: "Wir schauen uns Ihr Bad an und besprechen Wünsche, Maße und Budget." },
-      { name: "Planung in 3D", note: "Sie sehen das neue Bad, bevor der erste Handgriff passiert." },
-      { name: "Verbindlicher Festpreis", note: "Der Preis steht nach der Beratung fest – ohne Nachträge." },
-      { name: "Umbau in ca. 3 Tagen", note: "Kaum Abriss: Die fugenlosen Flächen kommen auf den vorhandenen Untergrund." },
-      { name: "Übergabe", note: "Sauber, fertig, benutzbar." },
-    ],
-  },
-  {
-    name: "Was dazugehört",
-    items: [
-      { name: "Fugenlose Wände", note: "Keine Fugen, kein Schimmel in Fugen, kein Nachputzen." },
-      { name: "Bodengleiche Dusche", note: "Ebenerdig, auch im Altbau oft möglich." },
-      { name: "Barrierefreie Ausführung", note: "Bewegungsflächen, Haltegriffe, rutschhemmende Böden." },
-      { name: "Armaturen von Villeroy & Boch", note: "Als Premiumpartner beraten wir zu Keramik und Armaturen." },
-    ],
-  },
-  {
-    name: "Für wen",
-    items: [
-      { name: "Eigenheim und Wohnung", note: "Wer nicht wochenlang ohne Bad sein möchte." },
-      { name: "Hotelbäder", note: "Wenn Zimmer nur wenige Tage gesperrt werden können." },
-      { name: "Mit Pflegegrad", note: "Für barrierefreie Umbauten gibt es Zuschüsse der Pflegekasse – wir helfen beim Antrag." },
-    ],
-  },
+  { tag: "Aufmaß", title: "Zuerst kommen wir vorbei", text: "Ihr Projektleiter nimmt die Räume auf und hört zu, was Sie vorhaben.", img: "maler-2.jpg", alt: "Maler mit Farbrolle" },
+  { tag: "3D-Planung", title: "Dann sehen Sie es vorher", text: "Fliesen, Möbel, Licht: in der 3D-Planung, bevor wir anfangen.", img: "fliesen-bad-3.jpg", alt: "Fertiges Bad mit Dachschräge" },
+  { tag: "Angebot", title: "Danach ein klares Angebot", text: "Alle Positionen transparent und persönlich besprochen.", img: "maler-4.jpg", alt: "Farbfächer und Malerrolle" },
+  { tag: "Ansprechpartner", title: "Ein Ansprechpartner bleibt", text: "Vom ersten Termin bis zur Übergabe dieselbe Person.", img: "innenausbau-7.jpg", alt: "Fertig ausgebautes Zimmer" },
+  { tag: "Eigene Teams", title: "Unsere Teams bauen", text: "Festangestellte Fachkräfte statt Subunternehmer-Kette.", img: "trockenbau-2.jpg", alt: "Trockenbau im Rohbau" },
+  { tag: "Übergabe", title: "Zum Schluss die Übergabe", text: "Gemeinsame Abnahme, sauber hinterlassen.", img: "sanitaer-3.jpg", alt: "Fertige Dusche mit Lichtleiste" },
 ];
 
 const references = [
@@ -191,20 +167,18 @@ export default function Home() {
       <section id="hotel" aria-labelledby="hotel-title" className="bg-paper py-24 sm:py-32 lg:py-40">
         <div className="wrap">
           <OccupancyBoard />
-          <div className="mt-16 grid gap-6 lg:grid-cols-12">
-            <h3 className="t-lead lg:col-span-4">Was wir in Ihrem Hotel renovieren</h3>
-            <ul className="grid gap-x-6 sm:grid-cols-2 lg:col-span-8 lg:grid-cols-3">
-              {hotelNav.items.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className="group block py-2.5">
-                    <span className="font-semibold underline decoration-transparent decoration-2 group-hover:decoration-blue">{item.label}</span>
-                    <span className="small block text-slate">{item.note}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="mt-10 lg:ml-[calc(33.333%+0.5rem)]">
+          <h3 className="t-lead mt-20 font-semibold">Was wir in Ihrem Hotel renovieren</h3>
+          <ul className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-6">
+            {hotelNav.items.map((item) => (
+              <li key={item.href}>
+                <Link href={item.href} className="group block">
+                  <Frame src={hotelImages[item.href]} alt="" ratio="4/5" label={item.label} tone={1} link sizes="(min-width: 1024px) 16vw, 50vw" />
+                  <span className="small mt-2 block text-slate">{item.note}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-10">
             <Link href="/hotelrenovierung#anfrage" className="btn-primary">
               Hotelprojekt anfragen
             </Link>
@@ -216,16 +190,41 @@ export default function Home() {
       <section id="bau" aria-labelledby="bau-title" className="section">
         <div className="wrap">
           <div className="grid gap-6 lg:grid-cols-12" data-reveal>
-            <h2 id="bau-title" className="h2 lg:col-span-6 lg:col-start-2">
+            <h2 id="bau-title" className="h2 lg:col-span-6">
               Bau &amp; Innenausbau
             </h2>
-            <p className="text-ink-2 lg:col-span-4 lg:col-start-8 lg:self-end">
-              Einzelne Gewerke oder komplette Sanierung – für Wohnungen, Häuser, Büros und Gewerbe in Siegen-Wittgenstein.
+            <p className="text-ink-2 lg:col-span-5 lg:col-start-8 lg:self-end">
+              Einzelne Gewerke oder komplette Sanierung – für Wohnungen, Häuser, Büros und Gewerbe in Siegen-Wittgenstein. Wählen Sie ein Gewerk.
             </p>
           </div>
-          <div className="mt-14">
-            <TradeRows groups={tradeGroups} />
-          </div>
+          <ul className="mt-12 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            {tradeGroups.flatMap((g) => g.rows).slice(0, 6).map((r) => (
+              <li key={r.href}>
+                <Link href={r.href} className="group block">
+                  <Frame src={r.img} alt="" ratio="4/3" label={r.name} tone={0} large link sizes="(min-width: 1024px) 25vw, 50vw" />
+                  <span className="mt-2 block text-ink-2">{r.value}</span>
+                </Link>
+              </li>
+            ))}
+            <li className="col-span-2 flex flex-col justify-between gap-6 bg-paper p-6">
+              <div>
+                <p className="t-lead font-semibold text-navy">Auch das gehört dazu</p>
+                <ul className="mt-4 grid gap-x-6 gap-y-2 sm:grid-cols-2">
+                  {tradeGroups.slice(1).flatMap((g) => g.rows).map((r) => (
+                    <li key={r.href}>
+                      <Link href={r.href} className="group block">
+                        <span className="font-semibold underline decoration-blue/30 decoration-2 group-hover:decoration-blue">{r.name}</span>
+                        <span className="small block text-slate">{r.value}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <Link href="/bau-innenausbau" className="link-arrow self-start">
+                Alle Leistungen im Überblick
+              </Link>
+            </li>
+          </ul>
         </div>
       </section>
 
@@ -236,17 +235,34 @@ export default function Home() {
 
       {/* Mein Zauberbad */}
       <section aria-labelledby="bad-title" className="bg-paper py-24 sm:py-32 lg:py-40">
-        <div className="wrap">
-          <div className="grid gap-6 lg:grid-cols-12" data-reveal>
-            <h2 id="bad-title" className="h2 lg:col-span-7">
-              Neues Bad in 3 Tagen, ohne Fugen.
-            </h2>
-            <p className="text-ink-2 lg:col-span-4 lg:col-start-9 lg:self-end">
-              Mit Mein Zauberbad renovieren wir Bäder ohne wochenlange Baustelle: kaum Abriss, verbindlicher Festpreis.
-            </p>
+        <div className="wrap grid items-center gap-12 lg:grid-cols-12 lg:gap-6">
+          <div className="order-last grid grid-cols-2 gap-3 lg:order-none lg:col-span-6">
+            <Frame src="sanitaer-1.jpg" alt="Renoviertes Bad mit Wanne" ratio="3/4" label="Badsanierung" tone={1} sizes="(min-width: 1024px) 25vw, 50vw" className="mt-16" />
+            <Frame src="sanitaer-3.jpg" alt="Dusche mit großflächigen Wandplatten" ratio="3/4" label="Dusche, großflächig" tone={0} sizes="(min-width: 1024px) 25vw, 50vw" />
           </div>
-          <div className="mt-16">
-            <BathIndex cols={bathCols} />
+          <div className="lg:col-span-5 lg:col-start-8" data-reveal>
+            <h2 id="bad-title" className="h2">
+              Neues Bad in <Mark>3 Tagen</Mark>.
+            </h2>
+            <p className="t-lead mt-6 text-ink-2">
+              Mit unserem System Mein Zauberbad: kaum Abriss, keine Fugen, ein verbindlicher Festpreis.
+            </p>
+            <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6">
+              {[
+                ["ca. 3 Tage", "statt mehrerer Wochen Baustelle"],
+                ["Festpreis", "steht nach der Beratung fest"],
+                ["Fugenlos", "pflegeleicht, kein Schimmel in Fugen"],
+                ["Barrierefrei", "auf Wunsch, mit Zuschuss bei Pflegegrad"],
+              ].map(([t, d]) => (
+                <div key={t}>
+                  <dt className="t-lead font-semibold text-navy">{t}</dt>
+                  <dd className="mt-1 text-ink-2">{d}</dd>
+                </div>
+              ))}
+            </dl>
+            <a href={site.zauberbadUrl} target="_blank" rel="noopener" className="btn-primary mt-10">
+              Mehr auf meinzauberbad.de
+            </a>
           </div>
         </div>
       </section>
@@ -254,84 +270,109 @@ export default function Home() {
       {/* Referenzen */}
       <section aria-labelledby="ref-title" className="section">
         <div className="wrap">
-          <h2 id="ref-title" className="h2 lg:ml-[calc(8.333%+0.5rem)]" data-reveal>
-            <span>Ausgewählte Projekte</span>
-          </h2>
-          <div className="mt-12">
-            <Ledger groups={references} />
+          <div className="flex flex-wrap items-end justify-between gap-6" data-reveal>
+            <h2 id="ref-title" className="h2">
+              Ausgewählte Projekte
+            </h2>
+            <Link href="/referenzen" className="link-arrow">
+              Alle Referenzen
+            </Link>
           </div>
+          <ul className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {references.flatMap((g) => g.rows.slice(0, 2).map((r) => ({ ...r, cat: g.name }))).map((r, i) => (
+              <li key={r.name} className={i === 0 ? "sm:col-span-2 sm:row-span-2" : ""}>
+                <Link href="/referenzen" className="group flex h-full flex-col">
+                  <Frame
+                    src={r.img}
+                    alt=""
+                    ratio={i === 0 ? "4/3" : "3/2"}
+                    label={r.cat}
+                    tone={r.cat === "Hotel" ? 0 : 1}
+                    large
+                    link
+                    className={i === 0 ? "sm:flex-1" : ""}
+                    imgClassName={i === 0 ? "sm:flex-1" : ""}
+                    sizes={i === 0 ? "(min-width: 1024px) 66vw, 100vw" : "(min-width: 1024px) 33vw, 50vw"}
+                  />
+                  <span className="mt-3 block font-semibold">
+                    <Todo text={r.name} />
+                  </span>
+                  <span className="block text-ink-2">{r.kind}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
       {/* Über uns */}
       <section aria-labelledby="about-title" className="bg-paper py-24 sm:py-32 lg:py-36">
-        <div className="wrap grid gap-10 lg:grid-cols-12 lg:gap-6">
-          <dl className="small grid grid-cols-3 gap-4 text-slate lg:order-first lg:col-span-2 lg:grid-cols-1 lg:content-start lg:pt-3">
-            <div>
-              <dt>Sitz</dt>
-              <dd className="font-medium text-ink">{site.street}, {site.city}</dd>
-            </div>
-            <div>
-              <dt>Seit</dt>
-              <dd className="font-medium text-ink">{site.since}</dd>
-            </div>
-            <div>
-              <dt>Telefon</dt>
-              <dd>
-                <a href={site.phoneHref} className="num font-medium text-ink underline decoration-blue">{site.phone}</a>
-              </dd>
-            </div>
-          </dl>
-          <div className="order-first lg:order-none lg:col-span-10" data-reveal>
-            <h2 id="about-title" className="sr-only">
-              Über uns
+        <div className="wrap grid items-center gap-12 lg:grid-cols-12 lg:gap-6">
+          <Frame
+            src="team-einsatz.jpg"
+            alt="Monteur von Pfeiffer & Schwarz in blauer Arbeitsjacke am Firmenwagen"
+            ratio="4/3"
+            label="Unser Team, unterwegs ab Bad Laasphe"
+            tone={0}
+            large
+            className="order-last lg:order-none lg:col-span-6"
+            sizes="(min-width: 1024px) 50vw, 100vw"
+          />
+          <div className="lg:col-span-5 lg:col-start-8" data-reveal>
+            <h2 id="about-title" className="h2">
+              Handwerk aus Bad Laasphe, seit {site.since}.
             </h2>
-            <p className="t-lead leading-[1.2] tracking-[-0.015em] text-slate">
-              <span className="relative float-left mt-1.5 mr-3 h-[3.6em] w-[3.6em] overflow-hidden bg-blue">
-                <Image src="/img/team-einsatz.jpg" alt="Monteur von Pfeiffer & Schwarz in blauer Arbeitsjacke" fill sizes="140px" className="object-cover" />
-              </span>
-              <span className="text-ink">Thomas Pfeiffer und Sascha Schwarz</span> führen rund 40 angestellte Fliesenleger, Maler, Trockenbauer
-              und Schreiner aus Bad Laasphe. Sie erkennen sie an der blauen Jacke.
+            <p className="t-lead mt-6 text-ink-2">
+              Thomas Pfeiffer und Sascha Schwarz führen rund 40 angestellte Fliesenleger, Maler, Trockenbauer und Schreiner.{" "}
+              <Mark>Sie erkennen sie an der blauen Jacke.</Mark>
             </p>
-            <p className="mt-6 t-lead leading-[1.2] tracking-[-0.015em] text-slate">
-              Bundesweit im Einsatz, persönlich erreichbar.{" "}
-              <Link href="/ueber-uns" className="text-ink underline decoration-blue decoration-2">
-                Mehr über uns
-              </Link>
-            </p>
+            <dl className="mt-10 grid grid-cols-3 gap-4">
+              {[
+                ["20+", "Jahre"],
+                ["~40", "Fachkräfte"],
+                ["[X]", "Hotels"],
+              ].map(([v, l]) => (
+                <div key={l}>
+                  <dt className="sr-only">{l}</dt>
+                  <dd className={`h2 num ${v.includes("[") ? "text-slate/50" : "text-navy"}`}>{v.replace(/[[\]]/g, "")}</dd>
+                  <dd className="small mt-2 text-slate">{l}</dd>
+                </div>
+              ))}
+            </dl>
+            <Link href="/ueber-uns" className="link-arrow mt-10">
+              Mehr über uns
+            </Link>
           </div>
         </div>
       </section>
 
       {/* Kundenstimmen */}
       <section aria-labelledby="stimmen-title" className="section">
-        <div className="wrap grid gap-8 lg:grid-cols-12 lg:gap-6">
-          <h2 id="stimmen-title" className="t-lead lg:col-span-2">
-            Was Kunden sagen
-          </h2>
-          <div className="grid gap-10 sm:grid-cols-3 lg:col-span-10 lg:grid-cols-10 lg:gap-2">
+        <div className="wrap">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <h2 id="stimmen-title" className="h2">
+              Was Kunden sagen
+            </h2>
+            <p className="text-slate">
+              Google <span className="todo">[4,X]</span> von 5 bei <span className="todo">[X]</span> Bewertungen
+            </p>
+          </div>
+          <div className="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-3">
             {quotes.map((q) => (
-              <figure key={q.tag} className={q.w} data-reveal>
-                <div className="relative h-[110px] overflow-hidden bg-paper">
-                  <Image src={`/img/${q.img}`} alt="" fill sizes="30vw" className="object-cover" />
-                </div>
-                <figcaption className="mt-3 t-body">
-                  <span className="font-semibold text-ink">
-                    <Todo text="[Name]" />
-                  </span>{" "}
-                  <span className="text-slate">
-                    <Todo text={q.role} />, {q.tag}
-                  </span>
-                </figcaption>
-                <blockquote className="mt-2 max-w-[42ch] pr-4 t-body leading-snug text-ink">
+              <figure key={q.tag} data-reveal>
+                <Frame src={q.img} alt="" ratio="3/2" label={q.tag} tone={q.tag === "Hotel" ? 0 : 1} large sizes="(min-width: 640px) 33vw, 100vw" />
+                <blockquote className="t-lead mt-5 max-w-[30ch] text-ink">
                   „<Todo text={q.quote} />“
                 </blockquote>
+                <figcaption className="mt-4 text-slate">
+                  <span className="font-semibold text-ink">
+                    <Todo text="[Name]" />
+                  </span>
+                  , <Todo text={q.role} />
+                </figcaption>
               </figure>
             ))}
           </div>
-          <p className="small text-slate lg:col-span-10 lg:col-start-3">
-            Google <span className="todo">[4,X]</span> von 5 bei <span className="todo">[X]</span> Bewertungen
-          </p>
         </div>
       </section>
 

@@ -88,7 +88,7 @@ export function Footer() {
         </div>
 
         <div className="col-span-2 flex min-h-40 items-center justify-center overflow-hidden bg-navy px-4 text-white lg:col-span-8 lg:min-h-80">
-          <p className="flex items-center gap-[0.25em] text-[clamp(2.4rem,8.4vw,8.6rem)] leading-none font-semibold tracking-[-0.045em] whitespace-nowrap">
+          <p className="flex items-center gap-[0.25em] text-[clamp(2.2rem,7.2vw,7.6rem)] leading-none font-semibold tracking-[-0.045em] whitespace-nowrap">
             <LogoMark className="h-[0.9em] w-[0.9em] text-white" />
             Pfeiffer &amp; Schwarz
           </p>
