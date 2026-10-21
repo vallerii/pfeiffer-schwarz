@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { SheetHero } from "@/components/home/SheetHero";
-import { OccupancyBoard } from "@/components/home/OccupancyBoard";
+import { FloorPlan } from "@/components/home/FloorPlan";
 import { Moments } from "@/components/home/Moments";
 import { Frame, Mark } from "@/components/Frame";
 import { Todo } from "@/components/Blocks";
@@ -89,7 +89,7 @@ const moments = [
   { tag: "Angebot", title: "Danach ein klares Angebot", text: "Alle Positionen transparent und persönlich besprochen.", img: "maler-4.jpg", alt: "Farbfächer und Malerrolle" },
   { tag: "Ansprechpartner", title: "Ein Ansprechpartner bleibt", text: "Vom ersten Termin bis zur Übergabe dieselbe Person.", img: "innenausbau-7.jpg", alt: "Fertig ausgebautes Zimmer" },
   { tag: "Eigene Teams", title: "Unsere Teams bauen", text: "Festangestellte Fachkräfte statt Subunternehmer-Kette.", img: "trockenbau-2.jpg", alt: "Trockenbau im Rohbau" },
-  { tag: "Übergabe", title: "Zum Schluss die Übergabe", text: "Gemeinsame Abnahme, sauber hinterlassen.", img: "sanitaer-3.jpg", alt: "Fertige Dusche mit Lichtleiste" },
+  { tag: "Übergabe", title: "Zum Schluss die Übergabe", text: "Gemeinsame Abnahme, sauber hinterlassen.", img: "fliesen-dusche-3.jpg", alt: "Fertige Dusche mit Glaswand" },
 ];
 
 const references = [
@@ -163,31 +163,71 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Hotel: Belegungsplan */}
+      {/* Hotel: offen bleiben + Bereiche (blaue Plaketten = Hotel) */}
       <section id="hotel" aria-labelledby="hotel-title" className="bg-paper py-24 sm:py-32 lg:py-40">
-        <div className="wrap">
-          <OccupancyBoard />
-          <h3 className="t-lead mt-20 font-semibold">Was wir in Ihrem Hotel renovieren</h3>
-          <ul className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-6">
+        <div className="wrap grid gap-14 lg:grid-cols-12 lg:gap-6">
+          <div className="lg:col-span-4" data-reveal>
+            <h2 id="hotel-title" className="h2">
+              Ihr Hotel bleibt offen.
+            </h2>
+            <p className="mt-6 text-ink-2">
+              Wir renovieren etagenweise. Gesperrt ist nur, was gerade in Arbeit ist – mit Einsatzleiter vor Ort und allen Gewerken im
+              eigenen Team.
+            </p>
+            <FloorPlan />
+            <Link href="/hotelrenovierung#anfrage" className="btn-primary mt-10">
+              Hotelprojekt anfragen
+            </Link>
+          </div>
+          <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:col-span-7 lg:col-start-6">
             {hotelNav.items.map((item) => (
               <li key={item.href}>
                 <Link href={item.href} className="group block">
-                  <Frame src={hotelImages[item.href]} alt="" ratio="4/5" label={item.label} tone={1} link sizes="(min-width: 1024px) 16vw, 50vw" />
-                  <span className="small mt-2 block text-slate">{item.note}</span>
+                  <Frame src={hotelImages[item.href]} alt="" ratio="4/5" label={item.label} tone={0} large link sizes="(min-width: 1024px) 20vw, 50vw" />
+                  <span className="mt-2 block text-ink-2">{item.note}</span>
                 </Link>
               </li>
             ))}
           </ul>
-          <div className="mt-10">
-            <Link href="/hotelrenovierung#anfrage" className="btn-primary">
-              Hotelprojekt anfragen
-            </Link>
+        </div>
+      </section>
+
+      {/* Mein Zauberbad */}
+      <section aria-labelledby="bad-title" className="section">
+        <div className="wrap grid items-center gap-12 lg:grid-cols-12 lg:gap-6">
+          <div className="order-last grid grid-cols-2 gap-3 lg:order-none lg:col-span-6">
+            <Frame src="fliesen-dusche-4.jpg" alt="Dusche mit Wandplatten in Betonoptik" ratio="3/4" label="Badsanierung" tone={1} sizes="(min-width: 1024px) 25vw, 50vw" className="mt-16" />
+            <Frame src="sanitaer-3.jpg" alt="Dusche mit großflächigen Wandplatten" ratio="3/4" label="Dusche, großflächig" tone={1} sizes="(min-width: 1024px) 25vw, 50vw" />
+          </div>
+          <div className="lg:col-span-5 lg:col-start-8" data-reveal>
+            <h2 id="bad-title" className="h2">
+              Neues Bad in <Mark tone="navy">3 Tagen</Mark>.
+            </h2>
+            <p className="t-lead mt-6 text-ink-2">
+              Für Ihr Zuhause und für Hotelbäder: Mit unserem System Mein Zauberbad gibt es kaum Abriss, keine Fugen und einen verbindlichen Festpreis.
+            </p>
+            <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6">
+              {[
+                ["ca. 3 Tage", "statt mehrerer Wochen Baustelle"],
+                ["Festpreis", "steht nach der Beratung fest"],
+                ["Fugenlos", "pflegeleicht, kein Schimmel in Fugen"],
+                ["Barrierefrei", "auf Wunsch, mit Zuschuss bei Pflegegrad"],
+              ].map(([t, d]) => (
+                <div key={t}>
+                  <dt className="t-lead font-semibold text-navy">{t}</dt>
+                  <dd className="mt-1 text-ink-2">{d}</dd>
+                </div>
+              ))}
+            </dl>
+            <a href={site.zauberbadUrl} target="_blank" rel="noopener" className="btn-primary mt-10">
+              Mehr auf meinzauberbad.de
+            </a>
           </div>
         </div>
       </section>
 
       {/* Bau & Innenausbau */}
-      <section id="bau" aria-labelledby="bau-title" className="section">
+      <section id="bau" aria-labelledby="bau-title" className="bg-paper py-24 sm:py-32 lg:py-40">
         <div className="wrap">
           <div className="grid gap-6 lg:grid-cols-12" data-reveal>
             <h2 id="bau-title" className="h2 lg:col-span-6">
@@ -201,12 +241,12 @@ export default function Home() {
             {tradeGroups.flatMap((g) => g.rows).slice(0, 6).map((r) => (
               <li key={r.href}>
                 <Link href={r.href} className="group block">
-                  <Frame src={r.img} alt="" ratio="4/3" label={r.name} tone={0} large link sizes="(min-width: 1024px) 25vw, 50vw" />
+                  <Frame src={r.img} alt="" ratio="4/3" label={r.name} tone={1} large link sizes="(min-width: 1024px) 25vw, 50vw" />
                   <span className="mt-2 block text-ink-2">{r.value}</span>
                 </Link>
               </li>
             ))}
-            <li className="col-span-2 flex flex-col justify-between gap-6 bg-paper p-6">
+            <li className="col-span-2 flex flex-col justify-between gap-6 bg-white p-6">
               <div>
                 <p className="t-lead font-semibold text-navy">Auch das gehört dazu</p>
                 <ul className="mt-4 grid gap-x-6 gap-y-2 sm:grid-cols-2">
@@ -229,42 +269,8 @@ export default function Home() {
       </section>
 
       {/* So arbeiten wir */}
-      <section aria-label="So arbeiten wir" className="pb-24 sm:pb-32 lg:pb-40">
+      <section aria-label="So arbeiten wir" className="section">
         <Moments title="So arbeiten wir" items={moments} />
-      </section>
-
-      {/* Mein Zauberbad */}
-      <section aria-labelledby="bad-title" className="bg-paper py-24 sm:py-32 lg:py-40">
-        <div className="wrap grid items-center gap-12 lg:grid-cols-12 lg:gap-6">
-          <div className="order-last grid grid-cols-2 gap-3 lg:order-none lg:col-span-6">
-            <Frame src="sanitaer-1.jpg" alt="Renoviertes Bad mit Wanne" ratio="3/4" label="Badsanierung" tone={1} sizes="(min-width: 1024px) 25vw, 50vw" className="mt-16" />
-            <Frame src="sanitaer-3.jpg" alt="Dusche mit großflächigen Wandplatten" ratio="3/4" label="Dusche, großflächig" tone={0} sizes="(min-width: 1024px) 25vw, 50vw" />
-          </div>
-          <div className="lg:col-span-5 lg:col-start-8" data-reveal>
-            <h2 id="bad-title" className="h2">
-              Neues Bad in <Mark>3 Tagen</Mark>.
-            </h2>
-            <p className="t-lead mt-6 text-ink-2">
-              Mit unserem System Mein Zauberbad: kaum Abriss, keine Fugen, ein verbindlicher Festpreis.
-            </p>
-            <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6">
-              {[
-                ["ca. 3 Tage", "statt mehrerer Wochen Baustelle"],
-                ["Festpreis", "steht nach der Beratung fest"],
-                ["Fugenlos", "pflegeleicht, kein Schimmel in Fugen"],
-                ["Barrierefrei", "auf Wunsch, mit Zuschuss bei Pflegegrad"],
-              ].map(([t, d]) => (
-                <div key={t}>
-                  <dt className="t-lead font-semibold text-navy">{t}</dt>
-                  <dd className="mt-1 text-ink-2">{d}</dd>
-                </div>
-              ))}
-            </dl>
-            <a href={site.zauberbadUrl} target="_blank" rel="noopener" className="btn-primary mt-10">
-              Mehr auf meinzauberbad.de
-            </a>
-          </div>
-        </div>
       </section>
 
       {/* Referenzen */}
@@ -313,7 +319,7 @@ export default function Home() {
             alt="Monteur von Pfeiffer & Schwarz in blauer Arbeitsjacke am Firmenwagen"
             ratio="4/3"
             label="Unser Team, unterwegs ab Bad Laasphe"
-            tone={0}
+            tone={1}
             large
             className="order-last lg:order-none lg:col-span-6"
             sizes="(min-width: 1024px) 50vw, 100vw"
@@ -324,7 +330,7 @@ export default function Home() {
             </h2>
             <p className="t-lead mt-6 text-ink-2">
               Thomas Pfeiffer und Sascha Schwarz führen rund 40 angestellte Fliesenleger, Maler, Trockenbauer und Schreiner.{" "}
-              <Mark>Sie erkennen sie an der blauen Jacke.</Mark>
+              <Mark tone="navy">Sie erkennen sie an der blauen Jacke.</Mark>
             </p>
             <dl className="mt-10 grid grid-cols-3 gap-4">
               {[
@@ -377,7 +383,7 @@ export default function Home() {
       </section>
 
       {/* Notfall */}
-      <section aria-labelledby="notfall-title" className="bg-blue text-white">
+      <section aria-labelledby="notfall-title" className="bg-navy text-white">
         <div className="wrap grid gap-8 py-16 lg:grid-cols-12 lg:items-end lg:gap-6 lg:py-20">
           <h2 id="notfall-title" className="h2 leading-[1.02] text-white lg:col-span-7">
             Wasser- oder Brandschaden?
@@ -427,7 +433,7 @@ export default function Home() {
           <div className="mt-10 grid gap-3 sm:grid-cols-3">
             {articles.map((a, i) => (
               <Link key={a.title} href={a.href} className="group" data-reveal>
-                <Frame src={a.img} alt="" ratio="3/2" label={a.tag} tone={i + 1} sizes="(min-width: 640px) 33vw, 100vw" />
+                <Frame src={a.img} alt="" ratio="3/2" label={a.tag} tone={a.tag.startsWith("Hotel") ? 0 : 1} sizes="(min-width: 640px) 33vw, 100vw" />
                 <h3 className="mt-3 max-w-[30ch] t-lead leading-tight underline decoration-transparent decoration-2 group-hover:decoration-blue">
                   {a.title}
                 </h3>

@@ -67,7 +67,7 @@ function Part({ frames, start, top = false, col }: { frames: F[]; start: number;
   return (
     <div className={`hidden min-h-0 flex-col gap-3 overflow-hidden lg:flex ${top ? "lg:row-start-1" : "lg:row-start-3"} ${col}`}>
       {frames.map((f, i) => (
-        <Frame key={f.src} {...f} tone={2} muted fill sizes="16vw" priority={top} />
+        <Frame key={f.src} {...f} tone={2} muted fill className="lg:flex-1!" sizes="16vw" priority={top} />
       ))}
     </div>
   );
@@ -104,9 +104,6 @@ export function SheetHero() {
             </a>
             <Link href="/referenzen" className="underline">
               Referenzen
-            </Link>
-            <Link href="/schadensanierung/wasserschaden" className="underline">
-              Wasser- oder Brandschaden
             </Link>
           </p>
         </div>

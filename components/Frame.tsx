@@ -44,7 +44,7 @@ export function Frame({
 }: Props) {
   const [w, h] = ratio.split("/").map(Number);
   return (
-    <figure className={`flex flex-col ${fill ? "lg:min-h-0" : ""} ${className}`} style={fill ? { flex: `${h / w} 1 0` } : undefined}>
+    <figure className={`flex flex-col ${fill ? "lg:min-h-0" : ""} ${className}`} style={fill ? { flex: `${Math.max(h / w, 0.9)} 1 0` } : undefined}>
       <div
         className={`relative w-full overflow-hidden bg-paper ${fill ? "lg:min-h-0 lg:flex-1 lg:aspect-auto!" : ""} ${imgClassName}`}
         style={{ aspectRatio: ratio }}
@@ -62,7 +62,7 @@ export function Frame({
         <figcaption
           className={`flex shrink-0 items-center truncate font-medium transition-colors duration-200 ${
             large ? "min-h-10 px-3.5 t-body" : "small h-7 px-2.5"
-          } ${STRIPS[tone % STRIPS.length]} ${link ? "group-hover:bg-blue group-hover:text-white group-focus-visible:bg-blue group-focus-visible:text-white" : ""}`}
+          } ${STRIPS[tone % STRIPS.length]} ${link ? "underline decoration-transparent decoration-2 underline-offset-4 group-hover:decoration-current group-focus-visible:decoration-current" : ""}`}
         >
           {label}
         </figcaption>
@@ -73,6 +73,6 @@ export function Frame({
 
 /** Dieselbe Plakette im Text: hebt eine Aussage hervor, sparsam einsetzen */
 export function Mark({ children, tone = "blue" }: { children: React.ReactNode; tone?: "blue" | "navy" | "white" }) {
-  const c = tone === "blue" ? "bg-blue text-white" : tone === "navy" ? "bg-navy text-white" : "bg-white text-blue";
+  const c = tone === "blue" ? "bg-blue text-white" : tone === "navy" ? "bg-navy text-white" : "bg-white text-navy";
   return <mark className={`${c} box-decoration-clone px-[0.22em] py-[0.02em]`}>{children}</mark>;
 }
