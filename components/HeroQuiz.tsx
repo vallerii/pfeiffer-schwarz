@@ -37,7 +37,7 @@ const PATHS: Record<PathId, { title: string; sub: string; steps: Step[] }> = {
   },
 };
 
-export function HeroQuiz() {
+export function HeroQuiz({ compact = false }: { compact?: boolean }) {
   const [path, setPath] = useState<PathId | null>(null);
   const [step, setStep] = useState(0);
   const [sel, setSel] = useState<Record<string, string[]>>({});
@@ -112,7 +112,7 @@ export function HeroQuiz() {
         {isStart && (
           <>
             <p className="t-body font-semibold">Was möchten Sie renovieren?</p>
-            <ul className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+            <ul className={`mt-4 grid grid-cols-2 gap-2 ${compact ? "" : "sm:grid-cols-4"}`}>
               {(Object.keys(PATHS) as PathId[]).map((id) => (
                 <li key={id}>
                   <button
@@ -121,7 +121,7 @@ export function HeroQuiz() {
                       setPath(id);
                       setStep(0);
                     }}
-                    className="group flex h-full w-full flex-col gap-1 bg-white p-3.5 text-left text-blue transition-colors duration-200 hover:bg-navy hover:text-white focus-visible:bg-navy focus-visible:text-white"
+                    className="group flex h-full w-full flex-col gap-1 rounded-xl bg-white p-3.5 text-left text-blue transition-colors duration-200 hover:bg-navy hover:text-white focus-visible:bg-navy focus-visible:text-white"
                   >
                     <span className="block t-body leading-tight font-semibold">{PATHS[id].title}</span>
                     <span className="small block text-ink-2 group-hover:text-white/80 group-focus-visible:text-white/80">{PATHS[id].sub}</span>
@@ -220,7 +220,7 @@ function DarkField({ label, ...props }: { label: string } & React.InputHTMLAttri
       {label}
       <input
         {...props}
-        className="h-11 bg-white px-3 text-base text-ink focus:outline-2 focus:outline-offset-2 focus:outline-white"
+        className="h-11 rounded-xl bg-white px-3 text-base text-ink focus:outline-2 focus:outline-offset-2 focus:outline-white"
       />
     </label>
   );

@@ -1,34 +1,40 @@
 @import "tailwindcss";
 
 /*
- * Richtung „Kontaktbogen“: weißer Grund, Anthrazit als Schrift, das Markenblau #1032CF
- * nur dort, wo gearbeitet wird – wie das blaue „Bitte nicht stören“-Schild an der Zimmertür.
- * Die alten Token-Namen bleiben, damit Unterseiten automatisch in die neue Welt wechseln.
+ * Richtung „Overtake“ (DESIGN.md): weißer Grund, abgerundete Paneele (20px), Inter 600/400.
+ * Palette um das Markenblau #1032CF: Blau-Schwarz für Text und dunkle Flächen,
+ * Immergrün-Hell (#A9BEFF) statt Hellgrün, Pfirsich (#FFC7A1) als Komplementär statt Rosa.
+ * Rollen: bg #fff · surface #eef1f7 · darkSurface/ink #0b1026 · muted #545b6b · accent/action #1032cf
+ *        · secondary #a9beff · tertiary #ffc7a1 · stroke #dce1ec
  */
 @theme {
-  --color-navy: #17191e; /* Anthrazit: Überschriften, Tinte */
-  --color-navy-deep: #0f1114;
-  --color-navy-soft: #2a2e35;
-  --color-blue: #1032cf; /* Markenblau, unverändert von pfeiffer-schwarz.com */
+  --color-navy: #0b1026; /* ink + darkSurface */
+  --color-navy-deep: #070a1a;
+  --color-navy-soft: #1b2242;
+  --color-blue: #1032cf; /* accent / action */
   --color-blue-bright: #2a4eef;
-  --color-blue-tint: #e6ebfb;
-  --color-blue-pale: #c8d2f7;
-  --color-slate: #5e6875; /* weiche Tinte, 5,6:1 auf Weiß */
-  --color-ink: #17191e;
-  --color-ink-2: #3f4650;
-  --color-paper: #f1f2f4;
-  --color-line: #e3e5e9;
+  --color-blue-tint: #e7ecff;
+  --color-blue-pale: #a9beff; /* secondary */
+  --color-peach: #ffc7a1; /* tertiary */
+  --color-slate: #545b6b; /* muted */
+  --color-mist: #aab3c8; /* mutedOnDark */
+  --color-ink: #0b1026;
+  --color-ink-2: #3a4155;
+  --color-paper: #eef1f7; /* surface */
+  --color-line: #dce1ec; /* stroke */
 
-  --font-display: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
 
+  --radius-panel: 20px;
+  --radius-card: 16px;
   --container-site: 1600px;
   --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
 
   --text-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
-  --text-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
-  --text-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
-  --text-head: clamp(2rem, 1.3rem + 3.2vw, 4rem);
+  --text-body: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --text-lead: clamp(1.1875rem, 1.05rem + 0.6vw, 1.5rem);
+  --text-head: clamp(2rem, 1.2rem + 3vw, 3.75rem);
 }
 
 @layer base {
@@ -53,8 +59,8 @@
     font-weight: 600;
     hyphens: auto;
     text-wrap: balance;
-    letter-spacing: -0.03em;
-    line-height: 1;
+    letter-spacing: -0.035em;
+    line-height: 1.08;
   }
   p {
     text-wrap: pretty;
@@ -78,7 +84,7 @@
 }
 @utility h2 {
   font-size: var(--text-head);
-  @apply leading-[0.98] font-semibold;
+  @apply leading-[1.06] font-semibold;
 }
 @utility lead {
   font-size: var(--text-lead);
@@ -98,16 +104,24 @@
   line-height: 1.45;
 }
 @utility btn {
-  @apply inline-flex min-h-12 items-center justify-center gap-2 px-6 text-[16px] font-semibold transition-[background-color,color,transform] duration-200 active:translate-y-px;
+  @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-[16px] font-semibold transition-[background-color,color,transform] duration-200 active:translate-y-px;
 }
 @utility btn-primary {
-  @apply btn bg-blue text-white hover:bg-navy;
+  @apply btn bg-blue text-white hover:bg-blue-bright;
 }
 @utility btn-ghost {
-  @apply btn bg-paper text-navy hover:bg-navy hover:text-white;
+  @apply btn bg-paper text-navy hover:bg-line;
 }
 @utility btn-light {
   @apply btn bg-white text-navy hover:bg-blue-tint;
+}
+/* Overtake-CTA: Pille mit runder Pfeil-Kachel */
+@utility btn-icon {
+  @apply inline-flex min-h-14 items-center gap-3 rounded-full bg-blue py-1.5 pr-6 pl-1.5 text-[16px] font-semibold text-white transition-colors duration-200 hover:bg-blue-bright;
+}
+@utility panel {
+  border-radius: var(--radius-panel);
+  overflow: hidden;
 }
 @utility link-arrow {
   @apply inline-flex items-center gap-2 font-semibold text-navy underline decoration-blue decoration-2 hover:text-blue;

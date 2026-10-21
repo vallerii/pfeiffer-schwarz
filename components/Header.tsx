@@ -37,7 +37,7 @@ function DesktopDropdown({ group }: { group: NavGroup }) {
       <div
         className={`absolute top-full left-1/2 z-40 -translate-x-1/2 pt-3 ${open ? "block" : "hidden"}`}
       >
-        <div className="menu-shadow flex gap-10 bg-paper p-7">
+        <div className="menu-shadow flex gap-10 rounded-(--radius-card) bg-white p-7">
           <ul className="w-64">
             <li>
               <Link href={group.href} className="mb-2 block pb-2 font-semibold text-navy underline decoration-blue decoration-2 hover:text-blue">
@@ -140,7 +140,7 @@ export function Header() {
           </div>
           {/* Auf kleinen Bildschirmen bleiben Anrufen und Anfragen in der fixierten Kopfzeile */}
           <div className="ml-auto flex items-center gap-1.5 xl:hidden">
-            <a href={site.phoneHref} aria-label={`Anrufen: ${site.phone}`} className="flex h-11 w-11 items-center justify-center bg-paper text-navy">
+            <a href={site.phoneHref} aria-label={`Anrufen: ${site.phone}`} className="flex h-11 w-11 items-center justify-center rounded-full bg-paper text-navy">
               <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
                 <path d="M6.6 3.5h3l1.4 4.2-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4.2 1.4v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
               </svg>

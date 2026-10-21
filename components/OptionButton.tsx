@@ -30,7 +30,7 @@ export function OptionButton({
 
 export function Progress({ value, tone = "dark" }: { value: number; tone?: "dark" | "light" }) {
   return (
-    <div className={`h-1.5 overflow-hidden ${tone === "dark" ? "bg-white/20" : "bg-paper"}`}>
+    <div className={`h-1.5 overflow-hidden rounded-full ${tone === "dark" ? "bg-white/20" : "bg-paper"}`}>
       <div
         className={`h-full transition-[width] duration-500 ease-(--ease-out-soft) ${tone === "dark" ? "bg-white" : "bg-blue"}`}
         style={{ width: `${Math.max(4, value)}%` }}

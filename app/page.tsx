@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { SheetHero } from "@/components/home/SheetHero";
+import { MediaHero } from "@/components/home/MediaHero";
 import { FloorPlan } from "@/components/home/FloorPlan";
 import { Moments } from "@/components/home/Moments";
-import { Frame, Mark } from "@/components/Frame";
+import { Frame, IconCta, Mark } from "@/components/Frame";
 import { Todo } from "@/components/Blocks";
 import { hotelNav, site } from "@/lib/site";
 
@@ -133,7 +133,7 @@ const articles = [
 export default function Home() {
   return (
     <>
-      <SheetHero />
+      <MediaHero />
 
       {/* Zwei Bereiche */}
       <section aria-labelledby="bereiche" className="section">
@@ -163,32 +163,44 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Hotel: offen bleiben + Bereiche (blaue Plaketten = Hotel) */}
-      <section id="hotel" aria-labelledby="hotel-title" className="bg-paper py-24 sm:py-32 lg:py-40">
-        <div className="wrap grid gap-14 lg:grid-cols-12 lg:gap-6">
-          <div className="lg:col-span-4" data-reveal>
+      {/* Hotel – Overtake „Exactly“: Medien links, rechts Überschrift, Text, CTA, gepunktete Linie, sechs Punkte */}
+      <section id="hotel" aria-labelledby="hotel-title" className="px-3">
+        <div className="panel grid gap-10 bg-paper p-3 lg:grid-cols-2 lg:gap-16">
+          <div className="relative min-h-[420px] overflow-hidden rounded-(--radius-card) lg:min-h-[640px]">
+            <Image src="/img/hotel-zimmer-2.jpg" alt="Renoviertes Hotelzimmer mit Holzdecke und offenem Bad" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+            <div className="absolute inset-x-3 bottom-3 rounded-(--radius-card) bg-white p-5 sm:right-auto sm:w-[360px]">
+              <FloorPlan />
+            </div>
+          </div>
+          <div className="flex flex-col justify-center px-3 pb-8 sm:px-6 lg:py-12 lg:pr-12 lg:pl-0" data-reveal>
             <h2 id="hotel-title" className="h2">
               Ihr Hotel bleibt offen.
             </h2>
-            <p className="mt-6 text-ink-2">
-              Wir renovieren etagenweise. Gesperrt ist nur, was gerade in Arbeit ist – mit Einsatzleiter vor Ort und allen Gewerken im
-              eigenen Team.
+            <p className="t-lead mt-6 max-w-[38ch] text-slate">
+              Wir renovieren etagenweise. Gesperrt ist nur, was gerade in Arbeit ist – mit Einsatzleiter vor Ort und allen Gewerken im eigenen Team.
             </p>
-            <FloorPlan />
-            <Link href="/hotelrenovierung#anfrage" className="btn-primary mt-10">
-              Hotelprojekt anfragen
-            </Link>
+            <div className="mt-9">
+              <IconCta href="/hotelrenovierung#anfrage">Hotelprojekt anfragen</IconCta>
+            </div>
+            <hr className="mt-10 border-0 border-t-2 border-dotted border-slate/40" />
+            <ul className="mt-8 grid gap-x-8 gap-y-5 sm:grid-cols-2">
+              {hotelNav.items.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className="group flex gap-3">
+                    <span className="relative mt-0.5 h-11 w-11 shrink-0 overflow-hidden rounded-full bg-white">
+                      <Image src={`/img/${hotelImages[item.href]}`} alt="" fill sizes="44px" className="object-cover" />
+                    </span>
+                    <span>
+                      <span className="block font-semibold text-navy underline decoration-transparent decoration-2 underline-offset-4 group-hover:decoration-blue">
+                        {item.label}
+                      </span>
+                      <span className="small block text-slate">{item.note}</span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
-          <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:col-span-7 lg:col-start-6">
-            {hotelNav.items.map((item) => (
-              <li key={item.href}>
-                <Link href={item.href} className="group block">
-                  <Frame src={hotelImages[item.href]} alt="" ratio="4/5" label={item.label} tone={0} large link sizes="(min-width: 1024px) 20vw, 50vw" />
-                  <span className="mt-2 block text-ink-2">{item.note}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 
@@ -196,12 +208,12 @@ export default function Home() {
       <section aria-labelledby="bad-title" className="section">
         <div className="wrap grid items-center gap-12 lg:grid-cols-12 lg:gap-6">
           <div className="order-last grid grid-cols-2 gap-3 lg:order-none lg:col-span-6">
-            <Frame src="fliesen-dusche-4.jpg" alt="Dusche mit Wandplatten in Betonoptik" ratio="3/4" label="Badsanierung" tone={1} sizes="(min-width: 1024px) 25vw, 50vw" className="mt-16" />
-            <Frame src="sanitaer-3.jpg" alt="Dusche mit großflächigen Wandplatten" ratio="3/4" label="Dusche, großflächig" tone={1} sizes="(min-width: 1024px) 25vw, 50vw" />
+            <Frame src="fliesen-dusche-4.jpg" alt="Dusche mit Wandplatten in Betonoptik" ratio="3/4" label="Badsanierung" tone={4} sizes="(min-width: 1024px) 25vw, 50vw" className="mt-16" />
+            <Frame src="sanitaer-3.jpg" alt="Dusche mit großflächigen Wandplatten" ratio="3/4" label="Dusche, großflächig" tone={4} sizes="(min-width: 1024px) 25vw, 50vw" />
           </div>
           <div className="lg:col-span-5 lg:col-start-8" data-reveal>
             <h2 id="bad-title" className="h2">
-              Neues Bad in <Mark tone="navy">3 Tagen</Mark>.
+              Neues Bad in <Mark tone="peach">3 Tagen</Mark>.
             </h2>
             <p className="t-lead mt-6 text-ink-2">
               Für Ihr Zuhause und für Hotelbäder: Mit unserem System Mein Zauberbad gibt es kaum Abriss, keine Fugen und einen verbindlichen Festpreis.
@@ -227,7 +239,7 @@ export default function Home() {
       </section>
 
       {/* Bau & Innenausbau */}
-      <section id="bau" aria-labelledby="bau-title" className="bg-paper py-24 sm:py-32 lg:py-40">
+      <section id="bau" aria-labelledby="bau-title" className="mx-3 rounded-(--radius-panel) bg-paper py-20 sm:py-28 lg:py-32">
         <div className="wrap">
           <div className="grid gap-6 lg:grid-cols-12" data-reveal>
             <h2 id="bau-title" className="h2 lg:col-span-6">
@@ -246,7 +258,7 @@ export default function Home() {
                 </Link>
               </li>
             ))}
-            <li className="col-span-2 flex flex-col justify-between gap-6 bg-white p-6">
+            <li className="col-span-2 flex flex-col justify-between gap-6 rounded-(--radius-card) bg-white p-6">
               <div>
                 <p className="t-lead font-semibold text-navy">Auch das gehört dazu</p>
                 <ul className="mt-4 grid gap-x-6 gap-y-2 sm:grid-cols-2">
@@ -293,7 +305,7 @@ export default function Home() {
                     alt=""
                     ratio={i === 0 ? "4/3" : "3/2"}
                     label={r.cat}
-                    tone={r.cat === "Hotel" ? 0 : 1}
+                    tone={r.cat === "Hotel" ? 0 : r.cat === "Bad" ? 4 : 1}
                     large
                     link
                     className={i === 0 ? "sm:flex-1" : ""}
@@ -312,7 +324,7 @@ export default function Home() {
       </section>
 
       {/* Über uns */}
-      <section aria-labelledby="about-title" className="bg-paper py-24 sm:py-32 lg:py-36">
+      <section aria-labelledby="about-title" className="mx-3 rounded-(--radius-panel) bg-paper py-20 sm:py-28 lg:py-32">
         <div className="wrap grid items-center gap-12 lg:grid-cols-12 lg:gap-6">
           <Frame
             src="team-einsatz.jpg"
@@ -366,7 +378,7 @@ export default function Home() {
           <div className="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-3">
             {quotes.map((q) => (
               <figure key={q.tag} data-reveal>
-                <Frame src={q.img} alt="" ratio="3/2" label={q.tag} tone={q.tag === "Hotel" ? 0 : 1} large sizes="(min-width: 640px) 33vw, 100vw" />
+                <Frame src={q.img} alt="" ratio="3/2" label={q.tag} tone={q.tag === "Hotel" ? 0 : q.tag === "Bad" ? 4 : 1} large sizes="(min-width: 640px) 33vw, 100vw" />
                 <blockquote className="t-lead mt-5 max-w-[30ch] text-ink">
                   „<Todo text={q.quote} />“
                 </blockquote>
@@ -383,7 +395,7 @@ export default function Home() {
       </section>
 
       {/* Notfall */}
-      <section aria-labelledby="notfall-title" className="bg-navy text-white">
+      <section aria-labelledby="notfall-title" className="mx-3 rounded-(--radius-panel) bg-navy text-white">
         <div className="wrap grid gap-8 py-16 lg:grid-cols-12 lg:items-end lg:gap-6 lg:py-20">
           <h2 id="notfall-title" className="h2 leading-[1.02] text-white lg:col-span-7">
             Wasser- oder Brandschaden?
@@ -394,7 +406,7 @@ export default function Home() {
               <a href={site.phoneHref} className="btn-light num">
                 {site.phone} anrufen
               </a>
-              <Link href="/schadensanierung/wasserschaden" className="btn bg-white/12 text-white hover:bg-white/25">
+              <Link href="/schadensanierung/wasserschaden" className="btn bg-white/10 text-white hover:bg-white/20">
                 Schadensanierung
               </Link>
             </div>
@@ -444,7 +456,7 @@ export default function Home() {
       </section>
 
       {/* Abschluss: drei Fotos, dann ein Feld */}
-      <section aria-labelledby="cta-title">
+      <section aria-labelledby="cta-title" className="mx-3 overflow-hidden rounded-(--radius-panel)">
         <div className="grid grid-cols-2 sm:grid-cols-3">
           {["hotel-bad-2.jpg", "innenausbau-3.jpg", "fliesen-bad-3.jpg"].map((src, i) => (
             <div key={src} className={`relative h-[32svh] min-h-56 sm:h-[40svh] ${i === 0 ? "col-span-2 sm:col-span-1" : ""}`}>
@@ -470,7 +482,7 @@ export default function Home() {
               </p>
             </div>
             <figure className="w-32 self-end justify-self-end lg:col-span-2 lg:col-start-11 lg:w-40">
-              <div className="flex aspect-[4/5] items-center justify-center bg-navy-soft p-3 text-center small text-white/75">
+              <div className="flex aspect-[4/5] items-center justify-center rounded-(--radius-card) bg-navy-soft p-3 text-center small text-white/75">
                 <Todo text="[Foto Ansprechpartner]" />
               </div>
               <figcaption className="small mt-2 text-white/70">
